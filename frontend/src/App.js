@@ -1,10 +1,14 @@
 import './App.css';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import Admin from "./pages/Admin";
 
 function App() {
   return (
-    <div>
-      <h1>hello</h1>
-    </div>
+    <Router>
+        <Routes>
+            <Route path="/" element={<Admin />} />
+        </Routes>
+    </Router>
   );
 }
 
