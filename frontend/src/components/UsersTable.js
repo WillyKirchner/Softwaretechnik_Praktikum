@@ -3,25 +3,18 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Table, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import TableRow from "./helperComponents/TableRow";
+
+const testObject = [
+    { name: 'Willy Fritz', id: '0001' },
+    { name: 'Max Moloch', id: '0002' },
+    { name: 'Willy Fritz', id: '0003' },
+]
 
 const StyledTable = styled(Table)`
     background: transparent;
     margin: 0 1em;
     padding: 0.25em 1em;
-`
-
-const StyledButton = styled(Button)`
-    background: transparent;
-    border-radius: 3px;
-    border: 2px solid #BF4F74;
-    color: #BF4F74;
-    margin: 0 1em;
-    padding: 0.25em 1em;
-    &:hover {
-        border: 2px solid #BF4F74;
-        color: #FFFFFF;
-        background: #BF4F74;
-    }
 `
 
 const UsersTable = props => {
@@ -39,16 +32,7 @@ const UsersTable = props => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>Willy</th>
-                        <th>willy@Email.com</th>
-                        <th><StyledButton> essen bestellen </StyledButton></th>
-                    </tr>
-                    <tr>
-                        <th>Lukas</th>
-                        <th>lukas@Email.com</th>
-                        <th><StyledButton> essen bestellen </StyledButton></th>
-                    </tr>
+                {testObject.map(user => (<TableRow user={user}/>))}
                 </tbody>
             </StyledTable>
         </>
@@ -56,7 +40,7 @@ const UsersTable = props => {
 }
 
 UsersTable.propTypes = {
-    users: PropTypes.object,
+    users: PropTypes.array,
 }
 
 export default UsersTable;
