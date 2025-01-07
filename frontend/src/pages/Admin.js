@@ -6,10 +6,12 @@ import styled from "styled-components";
 const ComponentContainer = styled.div`
     background-color: #c0cafa;
     border-radius: 5px;
-    padding: 10px;
-    margin: 10px;
+    padding: 15px;
     max-height: 500px;
     overflow: hidden;
+    width: 80%;
+    margin: 1em auto 1em;
+    max-width: 90em;
 `
 
 const Admin = props => {
