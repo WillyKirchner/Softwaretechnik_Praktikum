@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Table, Button } from 'react-bootstrap';
@@ -20,19 +20,30 @@ const StyledTable = styled(Table)`
 const UsersTable = props => {
     const { users } = props;
 
+    const handleDelete = (userId) => {
+        alert(`Deleted User with ID: ${userId}`);
+        // Implement actual deletion logic here (API call or state update)
+    };
+
     return (
         <>
-            <h1>Usertable</h1>
-            <StyledTable striped>
+            <h1>User Table</h1>
+            <StyledTable striped bordered hover>
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Essen</th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>ID</th>
+                    <th>Actions</th> {/* New Actions Column */}
+                </tr>
                 </thead>
                 <tbody>
-                {testObject.map(user => (<TableRow user={user}/>))}
+                {testObject.map(user => (
+                    <TableRow
+                        key={user.id}
+                        user={user}
+                        onDelete={() => handleDelete(user.id)}  // Pass delete handler
+                    />
+                ))}
                 </tbody>
             </StyledTable>
         </>
