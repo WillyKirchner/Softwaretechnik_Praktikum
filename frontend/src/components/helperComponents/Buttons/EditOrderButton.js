@@ -7,14 +7,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const StyledButton = styled(Button)`
     background: transparent;
     border-radius: 3px;
-    border: 2px solid #BF4F74;
-    color: #BF4F74;
-    margin: 0 1em;
-    padding: 0.25em 1em;
+    border: 2px solid #8a812f;
+    color: #8a812f;
+    padding: 5px;
     &:hover {
-        border: 2px solid #BF4F74;
+        border: 2px solid #8a812f;
         color: #FFFFFF;
-        background: #BF4F74;
+        background: #8a812f;
+    }
+    &:active {
+        border: 2px solid #8a812f;
+        color: #FFFFFF;
+        background: #8a812f;
     }
 `
 
@@ -26,7 +30,7 @@ const OrderFoodButton = props => {
     };
 
     return (
-        <StyledButton> Essen bestellen </StyledButton>
+        <StyledButton> Bestellung bearbeiten </StyledButton>
     )
 }
 

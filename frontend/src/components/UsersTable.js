@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Table } from "react-bootstrap";
 import TableRow from "./helperComponents/TableRow";
-import DatePicker from "react-datepicker";
 import CustomDatePicker from "./helperComponents/CustomDatePicker";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -43,7 +42,14 @@ const StyledSearch = styled.input`
 `
 
 const UsersTable = props => {
-    const { users } = props;
+    const {
+        title,
+        description,
+        users,
+        addOrder,
+        editOrder,
+        deleteOrder,
+    } = props;
 
     const [search, setSearch] = useState('')
     const [date, setDate] = useState(new Date());
@@ -63,9 +69,13 @@ const UsersTable = props => {
 
     return (
         <>
-            <h2>Bestellübersicht</h2>
-            <div>Wähle hier das Datum für welches du bestellen möchtest: <br />
-                <CustomDatePicker date={date} setDate={setDate}/>
+            <h2>{title}</h2>
+            <div>{description}<br />
+                {
+                    (addOrder || editOrder || deleteOrder) ?
+                        <CustomDatePicker date={date} setDate={setDate}/> :
+                        <div />
+                }
             </div>
             <StyledSearch
                 type="text"
@@ -79,13 +89,21 @@ const UsersTable = props => {
                     <tr>
                         <th>Name</th>
                         <th>ID</th>
-                        <th>Essen bestellen</th>
-                        <th>Bestellung ändern</th>
-                        <th>Bestellung löschen</th>
+                        {addOrder && <th>Essen bestellen</th>}
+                        {editOrder && <th>Bestellung ändern</th>}
+                        {deleteOrder && <th>Bestellung löschen</th>}
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredUsers.map(user => (<TableRow user={user} day={date}/>))}
+                    {filteredUsers.map(user => (
+                        <TableRow
+                            user={user}
+                            day={date}
+                            addOrder={addOrder}
+                            editOrder={editOrder}
+                            deleteOrder={deleteOrder}
+                        />
+                    ))}
                     </tbody>
                 </Table>
             </StyledTableBox>
@@ -94,7 +112,12 @@ const UsersTable = props => {
 }
 
 UsersTable.propTypes = {
+    title: PropTypes.string,
+    description: PropTypes.string,
     users: PropTypes.array,
+    addOrder: PropTypes.bool,
+    editOrder: PropTypes.bool,
+    deleteOrder: PropTypes.bool,
 }
 
 export default UsersTable;

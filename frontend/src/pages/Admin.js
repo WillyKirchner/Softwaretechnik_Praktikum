@@ -16,9 +16,19 @@ const Admin = props => {
     const { users } = props;
 
     return (
-        <ComponentContainer>
-            <UsersTable users={users} />
-        </ComponentContainer>
+        <>
+            <h1>Admin Seite - hier vllt. Header?</h1>
+            <ComponentContainer>
+                <UsersTable
+                    title={'Bestellübersicht'}
+                    description={'Wähle hier das Datum für welches du bestellen möchtest:'}
+                    users={users}
+                    addOrder={true}
+                    editOrder={true}
+                    deleteOrder={true}
+                />
+            </ComponentContainer>
+        </>
     );
 }
 
