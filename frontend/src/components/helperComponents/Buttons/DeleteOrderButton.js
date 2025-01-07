@@ -15,11 +15,6 @@ const StyledButton = styled(Button)`
         color: #FFFFFF;
         background: #BF4F74;
     }
-    &:active {
-        border: 2px solid #6b2c41;
-        color: #FFFFFF;
-        background: #6b2c41;
-    }
 `
 
 const OrderFoodButton = props => {
