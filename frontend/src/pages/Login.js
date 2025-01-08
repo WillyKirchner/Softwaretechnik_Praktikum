@@ -2,6 +2,7 @@
 import UsersTable from "../components/UsersTable";
 import PropTypes from "prop-types";
 import React, { useState } from 'react';
+import './Login.css';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -9,18 +10,19 @@ function Login() {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    // For now, just log the username and password to the console
+    // das muss auch noch iwie auf die tabelle zugreifen 
     console.log('Logging in with', username, password);
   };
 
   const handleForgotPassword = () => {
-    // Placeholder for forgot password logic
-    alert('Forgot Password clicked');
+    // Placeholder
+    alert('Wir haben Ihnen eine E-Mail geschickt, um Ihr Passwort zu erneuen (placeholder)');
   };
 
   return (
     <div className="login-container">
-      <h2>Login Page</h2>
+      <h3>Essensausgabe</h3>  
+      <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <div className="input-group">
           <label htmlFor="username">Benutzername:</label>
