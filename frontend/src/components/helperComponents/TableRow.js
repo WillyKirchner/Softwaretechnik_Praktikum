@@ -11,7 +11,7 @@ const UsersTable = props => {
         <tr>
             <th>{user.name}</th>
             <th>{user.id}</th>
-            {addOrder && <th><OrderFoodButton id={user.id} day={day}/></th>}
+            {addOrder && <th><OrderFoodButton name={user.name} id={user.id} day={day}/></th>}
             {editOrder && <th><EditOrderButton id={user.id} day={day}/></th>}
             {deleteOrder && <th><DeleteOrderButton id={user.id} day={day}/></th>}
         </tr>
