@@ -52,7 +52,7 @@ function Login() {
 
         <div className="forgot-password">
           <a href="#!" onClick={handleForgotPassword}>
-            Wir haben Ihnen eine E-Mail geschickt, um ihr Passwort wiederherzustellen. 
+            Passwort vergessen
           </a>
         </div>
       </form>
