@@ -26,12 +26,12 @@ const DeleteOrderButton = props => {
 
     const isButtonActive = () => {
         let isActive = true;
-        // change status based on request, which checks if there already is an order
+        // TODO: change status based on request, which checks if there already is an order
         return isActive;
     }
 
     const deleteOrder = () => {
-        // Rest anfrage mit id und Datum um essen zu löschen
+        // TODO: Rest anfrage mit id und Datum um essen zu löschen
     };
 
     return (

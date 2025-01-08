@@ -61,13 +61,13 @@ const OrderFoodButton = props => {
 
     const isButtonActive = () => {
         let isActive = true;
-        // change status based on request, which checks if there already is an order
+        // TODO: change status based on request, which checks if there already is an order
         return isActive;
     }
 
     const handleSendOrder = () => {
         const order = { id: id, day: day, food: mainDish, salad: salad}
-        // Rest anfrage mit order um essen zu bestellen
+        // TODO: Rest anfrage mit order um essen zu bestellen
         setShow(false);
     }
 

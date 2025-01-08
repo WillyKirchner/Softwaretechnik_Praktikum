@@ -61,10 +61,11 @@ const EditOrderButton = props => {
     const { name, id, day } = props;
 
     const [show, setShow] = useState(false);
+    // TODO: change red to received state
     const [mainDish, setMainDish] = useState('red');
     const [salad, setSalad] = useState(false);
 
-    // get if order is there
+    // TODO: get if order is there
 
     const handleSalad = () => {
         setSalad(!salad);
@@ -80,20 +81,20 @@ const EditOrderButton = props => {
 
     const isButtonActive = () => {
         let isActive = true;
-        // change status based on request, which checks if there already is an order
+        // TODO: change status based on request, which checks if there already is an order
         return isActive;
     }
 
     const handleSendOrder = () => {
         const order = { id: id, day: day, food: mainDish, salad: salad}
-        // Rest anfrage vorhandenes Esse läschen
-        // Rest anfrage mit order um essen zu bestellen
+        // TODO: Rest anfrage vorhandenes Esse läschen
+        // TODO: Rest anfrage mit order um essen zu bestellen
         setShow(false);
     }
 
     return (
         <>
-            <StyledButton onClick={handleShow} disabled={!isButtonActive()}> Essen bestellen </StyledButton>
+            <StyledButton onClick={handleShow} disabled={!isButtonActive()}> Bestellung ändern </StyledButton>
             <Modal show={show} onHide={handleClose}>
                 <StyledDiv>
                     <Modal.Header closeButton>
