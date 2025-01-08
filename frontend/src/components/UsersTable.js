@@ -7,21 +7,6 @@ import CustomDatePicker from "./helperComponents/CustomDatePicker";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const testObject = [
-    { name: 'Willy Fritz', id: '0001' },
-    { name: 'Max Moloch', id: '0002' },
-    { name: 'Michelangelo', id: '0003' },
-    { name: 'Caravaggio', id: '0004' },
-    { name: 'Marx', id: '0005' },
-    { name: 'Nietzsche', id: '0006' },
-    { name: 'Dostojevsky', id: '0007' },
-    { name: 'Simone', id: '0008' },
-    { name: 'Mose', id: '0009' },
-    { name: 'Homer', id: '0010' },
-    { name: 'Adorno', id: '0011' },
-    { name: 'Fromm', id: '0012' },
-]
-
 const StyledTableBox = styled.div`
     border: none;
     border-radius: 5px;
@@ -54,7 +39,7 @@ const UsersTable = props => {
     const [search, setSearch] = useState('')
     const [date, setDate] = useState(new Date());
 
-    const filteredUsers = testObject.filter(
+    const filteredUsers = users.filter(
         user => {
             return(
                 user.name.toLowerCase().includes(search.toLowerCase()) ||
