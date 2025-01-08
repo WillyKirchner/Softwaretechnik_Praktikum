@@ -11,7 +11,9 @@ const StyledTable = styled(Table)`
     padding: 0.25em 1em;
 `;
 
-const UsersTable = ({ users, handleDeleteUser }) => {
+const UsersTable = props => {
+    const { users } = props;
+
     return (
         <>
             <h1>User Table</h1>
@@ -24,21 +26,13 @@ const UsersTable = ({ users, handleDeleteUser }) => {
                 </tr>
                 </thead>
                 <tbody>
-                {users && users.length > 0 ? (
+                {
                     users.map(user => (
                         <TableRow
-                            key={user.id}
                             user={user}
-                            onDelete={() => handleDeleteUser(user.id)}  // Pass delete handler
                         />
                     ))
-                ) : (
-                    <tr>
-                        <td colSpan="3" style={{ textAlign: 'center' }}>
-                            Keine Benutzer gefunden
-                        </td>
-                    </tr>
-                )}
+                }
                 </tbody>
             </StyledTable>
         </>
