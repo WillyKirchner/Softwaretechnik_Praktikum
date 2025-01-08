@@ -1,23 +1,181 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UsersTable from "../components/UsersTable";
 import PropTypes from "prop-types";
-import UserServicesButton from "../components/UserServicesButton";  // Ensure correct import name
+import { Modal, Button, Container, Table } from 'react-bootstrap';
+
+// Testnutzer hinzufügen
+const initialUsers = [
+    { name: 'Max Mustermann', id: '0001' },
+    { name: 'Erika Musterfrau', id: '0002' },
+    { name: 'John Doe', id: '0003' }
+];
 
 const Admin = (props) => {
-    const { users } = props;
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [userList, setUserList] = useState(initialUsers);
+    const [newUser, setNewUser] = useState({ name: '', id: '' });
+
+    // Benutzer löschen
+    const handleDeleteUser = (userId) => {
+        const updatedUsers = userList.filter(user => user.id !== userId);
+        setUserList(updatedUsers);
+        alert(`User with ID ${userId} deleted.`);
+    };
+
+    // Eingabe für neuen Benutzer verwalten
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setNewUser({ ...newUser, [name]: value });
+    };
+
+    // Neuen Benutzer hinzufügen
+    const handleAddUser = () => {
+        if (newUser.name && newUser.id) {
+            setUserList([...userList, newUser]);
+            setShowAddModal(false);
+            alert(`User Added: ${newUser.name} (ID: ${newUser.id})`);
+            setNewUser({ name: '', id: '' });
+        } else {
+            alert('Bitte füllen Sie alle Felder aus.');
+        }
+    };
 
     return (
-        <div style={{ width: '100%', padding: '20px' }}>  {/* Added padding for spacing */}
-            <UsersTable users={users} />
-            <div style={{ width: '100%', marginTop: '20px' }}>  {/* Added margin for separation */}
-                <UserServicesButton />
-            </div>
+        <div style={{ width: '100%', padding: '20px' }}>
+            <h1>Admin Panel</h1>
+
+            {/* Originale Tabelle */}
+            <UsersTable users={userList} handleDeleteUser={handleDeleteUser} />
+
+            {/* Benutzer Aktionen Container */}
+            <Container style={{
+                backgroundColor: '#add8e6',
+                padding: '30px',
+                borderRadius: '10px',
+                marginTop: '40px',
+                textAlign: 'center'
+            }}>
+                <h2 style={{ marginBottom: '30px' }}>Benutzer Aktionen</h2>
+
+                {/* Füge Nutzer hinzu */}
+                <Button
+                    variant="primary"
+                    onClick={() => setShowAddModal(true)}
+                    style={{
+                        width: '80%',
+                        padding: '20px',
+                        fontSize: '22px',
+                        backgroundColor: '#7b00ff',
+                        border: 'none',
+                        marginBottom: '20px'
+                    }}
+                >
+                    Füge Nutzer hinzu
+                </Button>
+
+                {/* Nutzer Löschen */}
+                <Button
+                    variant="danger"
+                    onClick={() => setShowDeleteModal(true)}
+                    style={{
+                        width: '80%',
+                        padding: '20px',
+                        fontSize: '22px',
+                        backgroundColor: '#7b00ff',
+                        border: 'none',
+                        marginBottom: '20px'
+                    }}
+                >
+                    Nutzer Löschen
+                </Button>
+            </Container>
+
+            {/* Add User Modal */}
+            <Modal show={showAddModal} onHide={() => setShowAddModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Neuen Nutzer hinzufügen</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        value={newUser.name}
+                        onChange={handleInputChange}
+                        style={{ padding: '10px', marginBottom: '10px', width: '100%' }}
+                    />
+                    <input
+                        type="text"
+                        name="id"
+                        placeholder="ID"
+                        value={newUser.id}
+                        onChange={handleInputChange}
+                        style={{ padding: '10px', marginBottom: '10px', width: '100%' }}
+                    />
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowAddModal(false)}>
+                        Abbrechen
+                    </Button>
+                    <Button variant="success" onClick={handleAddUser}>
+                        Nutzer hinzufügen
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            {/* Delete User Modal (Tabelle im Modal) */}
+            <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Nutzer Löschen</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Table striped bordered hover>
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>ID</th>
+                            <th>Aktionen</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {userList.length > 0 ? (
+                            userList.map(user => (
+                                <tr key={user.id}>
+                                    <td>{user.name}</td>
+                                    <td>{user.id}</td>
+                                    <td>
+                                        <Button
+                                            variant="danger"
+                                            onClick={() => handleDeleteUser(user.id)}
+                                        >
+                                            Löschen
+                                        </Button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="3" style={{ textAlign: 'center' }}>
+                                    Keine Benutzer gefunden
+                                </td>
+                            </tr>
+                        )}
+                        </tbody>
+                    </Table>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                        Schließen
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 };
 
 Admin.propTypes = {
-    users: PropTypes.object,  // Kept propTypes as requested
+    users: PropTypes.array,
 };
 
 export default Admin;

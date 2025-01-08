@@ -5,26 +5,13 @@ import { Table, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TableRow from "./helperComponents/TableRow";
 
-const testObject = [
-    { name: 'Willy Fritz', id: '0001' },
-    { name: 'Max Moloch', id: '0002' },
-    { name: 'Willy Fritz', id: '0003' },
-]
-
 const StyledTable = styled(Table)`
     background: transparent;
     margin: 0 1em;
     padding: 0.25em 1em;
-`
+`;
 
-const UsersTable = props => {
-    const { users } = props;
-
-    const handleDelete = (userId) => {
-        alert(`Deleted User with ID: ${userId}`);
-        // Implement actual deletion logic here (API call or state update)
-    };
-
+const UsersTable = ({ users, handleDeleteUser }) => {
     return (
         <>
             <h1>User Table</h1>
@@ -33,25 +20,34 @@ const UsersTable = props => {
                 <tr>
                     <th>Name</th>
                     <th>ID</th>
-                    <th>Actions</th> {/* New Actions Column */}
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                {testObject.map(user => (
-                    <TableRow
-                        key={user.id}
-                        user={user}
-                        onDelete={() => handleDelete(user.id)}  // Pass delete handler
-                    />
-                ))}
+                {users && users.length > 0 ? (
+                    users.map(user => (
+                        <TableRow
+                            key={user.id}
+                            user={user}
+                            onDelete={() => handleDeleteUser(user.id)}  // Pass delete handler
+                        />
+                    ))
+                ) : (
+                    <tr>
+                        <td colSpan="3" style={{ textAlign: 'center' }}>
+                            Keine Benutzer gefunden
+                        </td>
+                    </tr>
+                )}
                 </tbody>
             </StyledTable>
         </>
-    )
-}
+    );
+};
 
 UsersTable.propTypes = {
     users: PropTypes.array,
-}
+    handleDeleteUser: PropTypes.func,
+};
 
 export default UsersTable;
