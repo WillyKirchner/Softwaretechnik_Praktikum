@@ -15,22 +15,33 @@ const StyledButton = styled(Button)`
         color: #FFFFFF;
         background: #BF4F74;
     }
+    &:disabled {
+        border: 2px solid #783e51;
+        color: #783e51;
+    }
 `
 
-const OrderFoodButton = props => {
-    const { id } = props;
+const DeleteOrderButton = props => {
+    const { id, day } = props;
 
-    const sendOrder = () => {
-        // Rest anfrage mit id um essen zu bestellen
+    const isButtonActive = () => {
+        let isActive = true;
+        // change status based on request, which checks if there already is an order
+        return isActive;
+    }
+
+    const deleteOrder = () => {
+        // Rest anfrage mit id und Datum um essen zu löschen
     };
 
     return (
-        <StyledButton> Bestellung löschen </StyledButton>
+        <StyledButton disabled={!isButtonActive()} onClick={deleteOrder()}> Bestellung löschen </StyledButton>
     )
 }
 
-OrderFoodButton.propTypes = {
+DeleteOrderButton.propTypes = {
     id: PropTypes.string,
+    day: PropTypes.instanceOf(Date),
 }
 
-export default OrderFoodButton;
+export default DeleteOrderButton;

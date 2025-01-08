@@ -10,17 +10,13 @@ const StyledButton = styled(Button)`
     border: 2px solid #418a2f;
     color: #418a2f;
     padding: 5px;
-
     &:hover {
         border: 2px solid #418a2f;
         color: #FFFFFF;
         background: #418a2f;
     }
-
-
     &:disabled {
         border: 2px solid #5b9347;
-        background: transparent;
         color: #5b9347;
     }
 `
@@ -35,20 +31,6 @@ const StyledCancelButton = styled(Button)`
         border: 2px solid #BF4F74;
         color: #FFFFFF;
         background: #BF4F74;
-    }
-`
-
-const StyledAcceptButton = styled(Button)`
-    background: transparent;
-    border-radius: 3px;
-    border: 2px solid #418a2f;
-    color: #418a2f;
-    padding: 5px;
-
-    &:hover {
-        border: 2px solid #418a2f;
-        color: #FFFFFF;
-        background: #418a2f;
     }
 `
 
@@ -128,9 +110,9 @@ const OrderFoodButton = props => {
                         <StyledCancelButton variant="secondary" onClick={handleClose}>
                             Schließen
                         </StyledCancelButton>
-                        <StyledAcceptButton variant="primary" onClick={handleSendOrder}>
+                        <StyledButton variant="primary" onClick={handleSendOrder}>
                             Bestellung absenden
-                        </StyledAcceptButton>
+                        </StyledButton>
                     </Modal.Footer>
                 </StyledDiv>
             </Modal>

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
+import { Button, Modal, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const StyledButton = styled(Button)`
@@ -15,22 +15,137 @@ const StyledButton = styled(Button)`
         color: #FFFFFF;
         background: #8a812f;
     }
+    &:disabled {
+        border: 2px solid #5e5a32;
+        color: #5e5a32;
+    }
 `
 
-const OrderFoodButton = props => {
-    const { id } = props;
+const StyledAcceptButton = styled(Button)`
+    background: transparent;
+    border-radius: 3px;
+    border: 2px solid #418a2f;
+    color: #418a2f;
+    padding: 5px;
+    &:hover {
+        border: 2px solid #418a2f;
+        color: #FFFFFF;
+        background: #418a2f;
+    }
+    &:disabled {
+        border: 2px solid #5b9347;
+        color: #5b9347;
+    }
+`
 
-    const sendOrder = () => {
-        // Rest anfrage mit id um essen zu bestellen
-    };
+const StyledCancelButton = styled(Button)`
+    background: transparent;
+    border-radius: 3px;
+    border: 2px solid #BF4F74;
+    color: #BF4F74;
+    padding: 5px;
+    &:hover {
+        border: 2px solid #BF4F74;
+        color: #FFFFFF;
+        background: #BF4F74;
+    }
+`
+
+const StyledDiv = styled.div`
+    background-color: #c0cafa;
+    border-radius: 5px;
+    border: none;
+`
+
+const EditOrderButton = props => {
+    const { name, id, day } = props;
+
+    const [show, setShow] = useState(false);
+    const [mainDish, setMainDish] = useState('red');
+    const [salad, setSalad] = useState(false);
+
+    // get if order is there
+
+    const handleSalad = () => {
+        setSalad(!salad);
+    }
+    const handleBlueFood = () => {
+        setMainDish('blue');
+    }
+    const handleRedFood = () => {
+        setMainDish('red')
+    }
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const isButtonActive = () => {
+        let isActive = true;
+        // change status based on request, which checks if there already is an order
+        return isActive;
+    }
+
+    const handleSendOrder = () => {
+        const order = { id: id, day: day, food: mainDish, salad: salad}
+        // Rest anfrage vorhandenes Esse läschen
+        // Rest anfrage mit order um essen zu bestellen
+        setShow(false);
+    }
 
     return (
-        <StyledButton> Bestellung bearbeiten </StyledButton>
+        <>
+            <StyledButton onClick={handleShow} disabled={!isButtonActive()}> Essen bestellen </StyledButton>
+            <Modal show={show} onHide={handleClose}>
+                <StyledDiv>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Bestellung ändern</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Du bearbeitest die Bestellung von {name} am {day.toLocaleDateString()}<br/><br/>
+                        <Form>
+                            <div>
+                                <Form.Check // prettier-ignore
+                                    inline
+                                    type="radio"
+                                    label="Rot"
+                                    onClick={handleRedFood}
+                                    name="group1"
+                                    checked={mainDish === 'red'}
+                                />
+                                <Form.Check // prettier-ignore
+                                    inline
+                                    type="radio"
+                                    label="Blau"
+                                    onClick={handleBlueFood}
+                                    name="group1"
+                                    checked={mainDish === 'blue'}
+                                />
+                            </div>
+                            <Form.Check // prettier-ignore
+                                type="checkbox"
+                                label="Salat"
+                                onClick={handleSalad}
+                                checked={salad}
+                            />
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <StyledCancelButton variant="secondary" onClick={handleClose}>
+                            Schließen
+                        </StyledCancelButton>
+                        <StyledAcceptButton variant="primary" onClick={handleSendOrder}>
+                            Bestellung ändern
+                        </StyledAcceptButton>
+                    </Modal.Footer>
+                </StyledDiv>
+            </Modal>
+        </>
     )
 }
 
-OrderFoodButton.propTypes = {
+EditOrderButton.propTypes = {
     id: PropTypes.string,
+    name: PropTypes.string,
+    day: PropTypes.instanceOf(Date),
 }
 
-export default OrderFoodButton;
+export default EditOrderButton;
