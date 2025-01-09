@@ -1,9 +1,78 @@
-BoxLayout:
-    orientation: 'vertical'
+ScreenManager:
+    CameraScreen:
+    ResultScreen:
+    ErrorScreen:
 
-    Camera:
-        id: camera
-        play: True
-    Label:
-        id: qrresult
-        text: '-'
+<CameraScreen>:
+    name: "camera"
+    BoxLayout:
+        orientation: 'vertical'
+
+        Camera:
+            id: camera
+            play: True
+
+        Label:
+            id: qrresult
+            text: '-'
+
+       
+
+<ResultScreen>:
+    name: "result"
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            id: result_label
+            text: "NAME"
+
+        Label:
+            id: food_label
+            text: "BLUE/RED"
+            backround_color: 
+            canvas.before:
+                Color:
+                    rgba: (0, 0, 1, 1)  # Background color (blue)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        Label:
+            id: salad_label
+            text: "SALAD"
+
+        Button:
+            text: "AUSGABE ERFOLGT"
+            size_hint_y: None
+            height: '48dp'
+            on_press: app.makeDeliveryStatusUpdate()
+
+        Button:
+            text: "AUSGABE UNMÖGLICH"
+            size_hint_y: None
+            height: '48dp'
+            on_press: app.switch_to_camera_screen()
+
+
+<ErrorScreen>:
+    name: "error"
+    BoxLayout:
+        orientation: 'vertical'
+
+        
+
+        Label:
+            text: "Error!"
+
+        Button:
+            text: "Okay"
+            size_hint_y: None
+            height: '48dp'
+            on_press: app.switch_to_camera_screen()
+            canvas.before:
+                Color:
+                    rgba: (1, 0, 0, 0.7)  # Background color (blue)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
