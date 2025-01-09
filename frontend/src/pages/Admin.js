@@ -46,7 +46,9 @@ const Admin = props => {
                     deleteOrder={true}
                 />
             </ComponentContainer>
-            <UserManagement users={testObject}/>
+            <ComponentContainer>
+                <UserManagement users={testObject}/>
+            </ComponentContainer>
         </>
     );
 }
