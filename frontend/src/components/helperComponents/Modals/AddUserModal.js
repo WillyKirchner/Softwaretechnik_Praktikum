@@ -99,7 +99,6 @@ const AddUserModal = props => {
 
     const handlePrivilegeLevelOn = () => {
         setPrivilegeOn(!privilegeOn);
-        console.log({testObject});
     }
 
 
