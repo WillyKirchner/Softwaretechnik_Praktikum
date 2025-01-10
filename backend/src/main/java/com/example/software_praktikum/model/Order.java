@@ -11,14 +11,16 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "orders", indexes = {
-        @Index(name = "person_id", columnList = "person_id")
-})
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "choice_id", nullable = false)
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "person_id", nullable = false)
+    private Person person;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
