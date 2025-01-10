@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "groups")
 public class Group {
@@ -17,4 +16,28 @@ public class Group {
     @Column(name = "group_alias", nullable = false, length = 100)
     private String groupAlias;
 
+    public Group(Integer id, String groupAlias) {
+        this.id = id;
+        this.groupAlias = groupAlias;
+    }
+
+    public Group() {
+
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getGroupAlias() {
+        return groupAlias;
+    }
+
+    public void setGroupAlias(String groupAlias) {
+        this.groupAlias = groupAlias;
+    }
 }

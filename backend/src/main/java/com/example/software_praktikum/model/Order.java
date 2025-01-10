@@ -8,8 +8,6 @@ import org.hibernate.annotations.ColumnDefault;
 import java.time.Instant;
 import java.time.LocalDate;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -38,4 +36,64 @@ public class Order {
     @Column(name = "last_edited", nullable = false)
     private Instant lastEdited;
 
+    public Order(Integer id, Person person, LocalDate date, String meal, String salad, Instant lastEdited) {
+        this.id = id;
+        this.person = person;
+        this.date = date;
+        this.meal = meal;
+        this.salad = salad;
+        this.lastEdited = lastEdited;
+    }
+
+    public Order() {
+
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public String getMeal() {
+        return meal;
+    }
+
+    public void setMeal(String meal) {
+        this.meal = meal;
+    }
+
+    public String getSalad() {
+        return salad;
+    }
+
+    public void setSalad(String salad) {
+        this.salad = salad;
+    }
+
+    public Instant getLastEdited() {
+        return lastEdited;
+    }
+
+    public void setLastEdited(Instant lastEdited) {
+        this.lastEdited = lastEdited;
+    }
 }
