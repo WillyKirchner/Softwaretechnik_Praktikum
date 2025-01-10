@@ -18,14 +18,14 @@ public class User {
     @Column(name = "password", nullable = false, length = 50)
     private String password;
 
-    @Column(name = "privilegeLevel")
-    private  Integer privilegeLevel;
+    @Column(name = "privilege_level")
+    private  Integer privilege_level;
 
-    public User(Integer id, String username, String password, Integer privilegeLevel) {
+    public User(Integer id, String username, String password, Integer privilege_level) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.privilegeLevel = privilegeLevel;
+        this.privilege_level = privilege_level;
     }
 
     public User() {
@@ -56,11 +56,11 @@ public class User {
         this.password = password;
     }
 
-    public Integer getPrivilegeLevel() {
-        return privilegeLevel;
+    public Integer getprivilege_level() {
+        return privilege_level;
     }
 
-    public void setPrivilegeLevel(Integer privilegeLevel) {
-        this.privilegeLevel = privilegeLevel;
+    public void setprivilege_level(Integer privilege_level) {
+        this.privilege_level = privilege_level;
     }
 }
