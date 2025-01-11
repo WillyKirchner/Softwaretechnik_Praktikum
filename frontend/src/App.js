@@ -1,17 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Admin from "./pages/Admin";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import Login from "./pages/Login";
 
 function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Admin />} />
-            </Routes>
-        </Router>
-    );
+  return (
+    <Router>
+        <Routes>
+            <Route path="/" element={<Login/>} />
+        </Routes>
+    </Router>
+  );
 }
 
 export default App;
