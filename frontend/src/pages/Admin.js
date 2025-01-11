@@ -1,5 +1,6 @@
 import React from 'react';
 import UsersTable from "../components/UsersTable";
+import UserManagement from "../components/UserManagement";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
@@ -44,6 +45,9 @@ const Admin = props => {
                     editOrder={true}
                     deleteOrder={true}
                 />
+            </ComponentContainer>
+            <ComponentContainer>
+                <UserManagement users={testObject}/>
             </ComponentContainer>
         </>
     );
