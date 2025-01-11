@@ -34,12 +34,14 @@ const UsersTable = props => {
         addOrder,
         editOrder,
         deleteOrder,
+        interactButton,
+        interactButtonHandler,
     } = props;
 
     const [search, setSearch] = useState('')
     const [date, setDate] = useState(new Date());
 
-    const filteredUsers = users.filter(
+    const filteredUsers = users && users.filter(
         user => {
             return(
                 user.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -77,18 +79,22 @@ const UsersTable = props => {
                         {addOrder && <th>Essen bestellen</th>}
                         {editOrder && <th>Bestellung ändern</th>}
                         {deleteOrder && <th>Bestellung löschen</th>}
+                        {interactButton && <th>{interactButton}</th>}
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredUsers.map(user => (
+                    {users && filteredUsers.map(user => (
                         <TableRow
                             user={user}
                             day={date}
                             addOrder={addOrder}
                             editOrder={editOrder}
                             deleteOrder={deleteOrder}
+                            interact={interactButton}
+                            interactHandler={interactButtonHandler}
                         />
                     ))}
+                    {!users && <th>no data</th>}
                     </tbody>
                 </Table>
             </StyledTableBox>
@@ -103,6 +109,8 @@ UsersTable.propTypes = {
     addOrder: PropTypes.bool,
     editOrder: PropTypes.bool,
     deleteOrder: PropTypes.bool,
+    interactButton: PropTypes.string,
+    interactButtonHandler: PropTypes.func,
 }
 
 export default UsersTable;

@@ -107,10 +107,10 @@ const OrderFoodButton = props => {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <StyledCancelButton variant="secondary" onClick={handleClose}>
+                        <StyledCancelButton onClick={handleClose}>
                             Schließen
                         </StyledCancelButton>
-                        <StyledButton variant="primary" onClick={handleSendOrder}>
+                        <StyledButton onClick={handleSendOrder}>
                             Bestellung absenden
                         </StyledButton>
                     </Modal.Footer>
