@@ -1,6 +1,7 @@
 package com.example.software_praktikum.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -12,14 +13,16 @@ import java.time.LocalDate;
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "choice_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "person_id", nullable = false)
-    private Person person;
+    private com.example.software_praktikum.model.Person person;
 
+    @NotNull
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
@@ -27,11 +30,13 @@ public class Order {
     @Column(name = "meal")
     private String meal;
 
+    @NotNull
     @ColumnDefault("'nein'")
     @Lob
     @Column(name = "salad", nullable = false)
     private String salad;
 
+    @NotNull
     @ColumnDefault("current_timestamp()")
     @Column(name = "last_edited", nullable = false)
     private Instant lastEdited;
@@ -45,9 +50,7 @@ public class Order {
         this.lastEdited = lastEdited;
     }
 
-    public Order() {
-
-    }
+    public Order() {}
 
     public Integer getId() {
         return id;

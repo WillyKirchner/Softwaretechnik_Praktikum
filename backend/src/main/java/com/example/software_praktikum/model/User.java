@@ -1,36 +1,49 @@
 package com.example.software_praktikum.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Entity
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Size(max = 50)
+    @NotNull
     @Column(name = "username", nullable = false, length = 50)
     private String username;
 
+    @Size(max = 50)
+    @NotNull
     @Column(name = "password", nullable = false, length = 50)
     private String password;
 
-    @Column(name = "privilege_level")
-    private  Integer privilege_level;
 
-    public User(Integer id, String username, String password, Integer privilege_level) {
+    @Column(name = "privilege_level")
+    private Integer privilegeLevel;
+
+    public User(Integer id, String username, String password, Integer privilegeLevel) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.privilege_level = privilege_level;
+        this.privilegeLevel = privilegeLevel;
     }
 
-    public User() {
+    public User() {}
 
+    public User(String username, String password, Integer privilegeLevel) {
+        this.username = username;
+        this.password = password;
+        this.privilegeLevel = privilegeLevel;
     }
+
 
     public Integer getId() {
         return id;
@@ -56,11 +69,11 @@ public class User {
         this.password = password;
     }
 
-    public Integer getprivilege_level() {
-        return privilege_level;
+    public Integer getPrivilegeLevel() {
+        return privilegeLevel;
     }
 
-    public void setprivilege_level(Integer privilege_level) {
-        this.privilege_level = privilege_level;
+    public void setPrivilegeLevel(Integer privilegeLevel) {
+        this.privilegeLevel = privilegeLevel;
     }
 }

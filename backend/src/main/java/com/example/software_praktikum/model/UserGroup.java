@@ -1,27 +1,26 @@
 package com.example.software_praktikum.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Entity
-@Table(name = "user_groups", indexes = {
-        @Index(name = "group_id", columnList = "group_id"),
-        @Index(name = "user_id", columnList = "user_id")
-})
+@Table(name = "user_groups")
 public class UserGroup {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Automatische ID-Generierung
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -31,9 +30,7 @@ public class UserGroup {
         this.user = user;
     }
 
-    public UserGroup() {
-        
-    }
+    public UserGroup() {}
 
     public Integer getId() {
         return id;

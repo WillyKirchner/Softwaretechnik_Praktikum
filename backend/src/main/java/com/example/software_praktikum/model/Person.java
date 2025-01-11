@@ -1,23 +1,27 @@
 package com.example.software_praktikum.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Entity
-@Table(name = "persons", indexes = {
-        @Index(name = "group_id", columnList = "group_id")
-})
+@Table(name = "persons")
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "person_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Size(max = 100)
+    @NotNull
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;
 
@@ -27,9 +31,13 @@ public class Person {
         this.group = group;
     }
 
-    public Person() {
+    public Person() {}
 
+    public Person(String name, Group group) {
+        this.name = name;
+        this.group = group;
     }
+
 
     public Integer getId() {
         return id;

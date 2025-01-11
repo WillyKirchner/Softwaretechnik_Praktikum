@@ -1,7 +1,7 @@
 package com.example.software_praktikum.service;
 
-import com.example.software_praktikum.model.LeadingUser;
 import com.example.software_praktikum.model.Order;
+import com.example.software_praktikum.model.Person;
 import com.example.software_praktikum.model.User;
 import com.example.software_praktikum.repository.OrderRepository;
 import com.example.software_praktikum.repository.UserRepository;
@@ -26,10 +26,12 @@ public class ServerManager {
         return userRepository.findById(id).orElse(null);
     }
 
-    public Order getTodaysOrderFromUser(User user) {
-        List<Order> orders = orderRepository.findByWhoOrdered(user);
-        return orders.isEmpty() ? null : orders.get(0);
+    public Order getTodaysOrderFromUser(Person user) {
+        Order order = orderRepository.findByPerson(user);
+        return order;
     }
+
+    /*
 
     public void sendOrderToKitchenClient(Order order) {
 
@@ -106,4 +108,6 @@ public class ServerManager {
 
     public void createHierarchyView(int id) {
     }
+    */
+
 }

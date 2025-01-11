@@ -1,6 +1,8 @@
 package com.example.software_praktikum.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +15,8 @@ public class Group {
     @Column(name = "group_id", nullable = false)
     private Integer id;
 
+    @Size(max = 100)
+    @NotNull
     @Column(name = "group_alias", nullable = false, length = 100)
     private String groupAlias;
 
@@ -21,9 +25,7 @@ public class Group {
         this.groupAlias = groupAlias;
     }
 
-    public Group() {
-
-    }
+    public Group() {}
 
     public Integer getId() {
         return id;
