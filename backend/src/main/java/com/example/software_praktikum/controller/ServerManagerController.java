@@ -1,6 +1,6 @@
 package com.example.software_praktikum.controller;
 
-import com.example.software_praktikum.model.LeadingUser;
+// import com.example.software_praktikum.model.LeadingUser;
 import com.example.software_praktikum.model.Order;
 import com.example.software_praktikum.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/server-manager")
 public class ServerManagerController {
-
+    /*
     private final ServerManager serverManager;
 
     @Autowired
@@ -103,4 +103,6 @@ public class ServerManagerController {
     public void createHierarchyView(@PathVariable int id) {
         serverManager.createHierarchyView(id);
     }
+
+     */
 }

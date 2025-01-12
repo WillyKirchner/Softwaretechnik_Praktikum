@@ -13,6 +13,8 @@ import java.util.List;
 @Service
 public class ServerManager {
 
+    /*
+
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
 
@@ -31,7 +33,7 @@ public class ServerManager {
         return order;
     }
 
-    /*
+
 
     public void sendOrderToKitchenClient(Order order) {
 
