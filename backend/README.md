@@ -9,12 +9,13 @@
 
 ### Web documentation of all API endpoints
 
-Open http://localhost:8080/swagger-ui/index.html in your browser. You should now be able to see and test all endpoints.
+Open http://localhost:5000/swagger-ui/index.html in your browser. You should now be able to see and test all endpoints.
 
 ### Changing the standard port
 
 In case you are running another application that is already using port 8080:
 - go to src > main > resources > application.properties
 - change **server.port** to some other port
+
 
 
