@@ -3,7 +3,6 @@ import {Button, Form, Modal} from "react-bootstrap";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import UsersTable from "../../UsersTable";
-import api from "../../api";
 
 const StyledInput = styled.input`
     width: 100%;

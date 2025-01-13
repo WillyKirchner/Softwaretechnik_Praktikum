@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import UsersTable from "../components/UsersTable";
 import UserManagement from "../components/UserManagement";
 import PropTypes from "prop-types";
@@ -33,13 +33,31 @@ const ComponentContainer = styled.div`
 `
 
 const Admin = props => {
-    const { users, isLoggedIn } = props;
+    const { isLoggedIn } = props;
+
+    const [users, setUsers] = useState([])
 
     const navigate = useNavigate();
-
     const handleUnloggedTry = () => {
         navigate('/');
+
     }
+    //const { users } = props;
+    useEffect(() => {
+        // Daten von der API laden und in den State setzen
+        fetch('http://localhost:5000/person/')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Gefetchte Daten:', data);
+                // Daten transformieren, um sie mit deinem bestehenden testObject-Format abzugleichen
+                const transformedData = data.map(user => ({
+                    name: user.name,
+                    id: user.id.toString().padStart(4, '0') // ID vierstellig formatieren
+                }));
+                setUsers(transformedData);
+            })
+            .catch(error => console.error('Fehler beim Laden der Daten:', error));
+    }, []);
 
     if (isLoggedIn) {
         return (
@@ -49,7 +67,7 @@ const Admin = props => {
                     <UsersTable
                         title={'Bestellübersicht'}
                         description={'Wähle hier das Datum für welches du bestellen möchtest:'}
-                        users={testObject}
+                        users={users}
                         addOrder={true}
                         editOrder={true}
                         deleteOrder={true}
