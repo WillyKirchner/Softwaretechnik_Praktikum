@@ -42,6 +42,11 @@ public class UserController {
         return userRepository.save(user);
     }
 
+    @PutMapping("/create/json/")
+    public User createUserByJson(@RequestBody User newUser) {
+        return userRepository.save(newUser);
+    }
+
     @PutMapping("/update")
     public User updateUser(@RequestParam int userID,
                            @RequestParam(required = false) String username,
@@ -52,6 +57,11 @@ public class UserController {
 
         return userRepository.save(user);
 
+    }
+
+    @PutMapping("/update/json/")
+    public User UpdateUserByJson(@RequestBody User newUser) {
+        return userRepository.save(newUser);
     }
 
 
