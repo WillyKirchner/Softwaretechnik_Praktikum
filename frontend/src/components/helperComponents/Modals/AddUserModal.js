@@ -3,6 +3,7 @@ import {Button, Form, Modal} from "react-bootstrap";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import UsersTable from "../../UsersTable";
+import api from "../../api";
 
 const StyledInput = styled.input`
     width: 100%;
@@ -62,7 +63,7 @@ const AddUserModal = props => {
 
     const [privilegeOn, setPrivilegeOn] = useState(true)
     // const [userList, setUserList] = useState(testobject)
-    const [newUser, setNewUser] = useState({name: '', password: '', privilegeLevel: 0, leadOver: []});
+    const [newUser, setNewUser] = useState({name: '', password: '', privilegeLevel: 0 });
 
     useEffect(() => {
         // TODO: RestAPI Get Userlist
@@ -73,29 +74,84 @@ const AddUserModal = props => {
         setNewUser({...newUser, [name]: value});
     };
 
-    const handleAddUser = () => {
-        if (newUser.name && newUser.password && newUser.privilegeLevel > -1) {
-            // TODO: RestAPI add user
-            // setUserList([...userList, newUser]);
-            setShowModalFalse();
-            alert(`User Added: ${newUser.name} (Password: ${newUser.password}, PrivilegeLevel: ${newUser.privilegeLevel}, LeadOver: )`);
-            setNewUser({name: '', password: '', privilegeLevel: 0, leadOver: []});
-        } else {
-            alert('Bitte fülle alle Felder aus.');
+    const handleAddUser = async () => {
+        if (!newUser.name || !newUser.password || newUser.privilegeLevel === undefined) {
+            alert('Bitte alle Felder ausfüllen.');
+            return;
+        }
+
+        try {
+            console.log('Daten, die gesendet werden:', {
+                username: newUser.name,
+                password: newUser.password,
+                privilegeLevel: newUser.privilegeLevel,
+            });
+
+            // Erstelle die URL mit Query-Parametern
+            const url = `http://localhost:5000/user/create/?username=${encodeURIComponent(newUser.name)}&password=${encodeURIComponent(newUser.password)}&privilegeLevel=${encodeURIComponent(newUser.privilegeLevel)}`;
+
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json', // Kann bleiben, wird aber nicht verwendet
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert(`User hinzugefügt oder aktualisiert: ${data.username}`);
+                setShowModalFalse();
+                setNewUser({ name: '', password: '', privilegeLevel: 0 });
+            } else {
+                const errorData = await response.json();
+                console.error('Fehlerdetails:', errorData);
+                alert(`Fehler beim Hinzufügen/Aktualisieren: ${errorData.message || 'Unbekannter Fehler'}`);
+            }
+        } catch (error) {
+            console.error("Error adding/updating user:", error);
+            alert("Fehler beim Hinzufügen/Aktualisieren. Bitte erneut versuchen.");
         }
     };
 
-    const handleAddNormalUser = () => {
-        if (newUser.name) {
-            // TODO: RestAPI add normal user, cut off all except name
-            // setUserList([...userList, newUser]);
-            setShowModalFalse();
-            alert(`User Added: ${newUser.name} `);
-            setNewUser({name: '', password: '', privilegeLevel: 0, leadOver: []});
-        } else {
-            alert('Bitte fülle das Feld aus.');
+
+
+    const handleAddNormalUser = async () => {
+        if (!newUser.name) {
+            alert('Bitte fülle das Feld für den Namen aus.');
+            return;
+        }
+
+        try {
+            console.log('Daten, die gesendet werden:', { username: newUser.name });
+
+            // Erstelle die URL mit dem Query-Parameter für den Namen
+            const url = `http://localhost:5000/user/create/?username=${encodeURIComponent(newUser.name)}&password=default&privilegeLevel=0`;
+
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json', // Optional, aber schadet nicht
+                },
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert(`Normaler Nutzer hinzugefügt: ${data.username}`);
+                setShowModalFalse();
+                setNewUser({ name: '', password: '', privilegeLevel: 0 });
+            } else {
+                const errorData = await response.json();
+                console.error('Fehlerdetails:', errorData);
+                alert(`Fehler beim Hinzufügen: ${errorData.message || 'Unbekannter Fehler'}`);
+            }
+        } catch (error) {
+            console.error("Fehler beim Hinzufügen des normalen Nutzers:", error);
+            alert("Fehler beim Hinzufügen. Bitte erneut versuchen.");
         }
     };
+
+
+
 
     const handlePrivilegeLevelOn = () => {
         setPrivilegeOn(!privilegeOn);
