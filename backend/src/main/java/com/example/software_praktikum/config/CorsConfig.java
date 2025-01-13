@@ -18,7 +18,8 @@ public class CorsConfig {
                 registry.addMapping("/**")
                         // Frontend URL
                         .allowedOrigins("http://localhost:3000")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+                        .allowedMethods("*")  // Erlaubt alle Methoden
+                        .allowedHeaders("*"); // Erlaubt alle Header
             }
         };
     }
