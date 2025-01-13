@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
+import UsersTable from "../components/UsersTable";
 
 
 //alles nur Ästhetik
@@ -69,7 +70,10 @@ const StyledA = styled.a`
     }
 `
 //Loginlogik
-const Login = () => {
+const Login = props => {
+
+    const { loggedInHandler } = props;
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -95,10 +99,12 @@ const Login = () => {
   
         if (user) {
         // redirect zur Admin page
-        navigate('/Admin');
+            loggedInHandler(true);
+            navigate('/Admin');
         } else {
         // wenn nicht matcht, Fehlermeldung
-        setError('Benutzername oder Passwort ungültig ');
+            loggedInHandler(false);
+            setError('Benutzername oder Passwort ungültig ');
         }
     };
 
@@ -149,6 +155,10 @@ const Login = () => {
             </form>
         </ContainerDiv>
     );
+}
+
+UsersTable.propTypes = {
+    loggedInHandler: PropTypes.func,
 }
 
 export default Login;
