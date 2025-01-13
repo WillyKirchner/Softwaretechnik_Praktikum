@@ -1,7 +1,11 @@
 import PropTypes from "prop-types";
 import React, {useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
+import UsersTable from "../components/UsersTable";
 
+
+//alles nur Ästhetik
 const ContainerDiv = styled.div`
     width: 100%;
     max-width: 400px;
@@ -65,22 +69,48 @@ const StyledA = styled.a`
         text-decoration: underline;
     }
 `
+//Loginlogik
+const Login = props => {
 
-const Login = () => {
+    const { loggedInHandler } = props;
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+
+    //dummies eingefügt, aber eigentlich brauchen wir noch Verknüpfung mit csv vom Admin
+    const dummyLogins = [
+        { username: 'Arbeiter1', password: 'Passwort1' },
+        { username: 'Arbeiter2', password: 'Passwort2' },
+        { username: 'Arbeiter3', password: 'Passwort3' }
+      ];
+
+    const navigate = useNavigate(); // Used für redirecting
 
     const handleLogin = (event) => {
         event.preventDefault();
         // das muss auch noch iwie auf die tabelle zugreifen
         // TODO: RestAPI-Anfrage für Login
         // TODO: Bei erfolg, weiterleiten an Admin Seite, bei misserfolg meldung
-        console.log('Logging in with', username, password);
+        //console.log('Logging in with', username, password);
+        // Check ob credentials dummy login daten matchen
+        const user = dummyLogins.find(
+            (login) => login.username === username && login.password === password);
+  
+        if (user) {
+        // redirect zur Admin page
+            loggedInHandler(true);
+            navigate('/Admin');
+        } else {
+        // wenn nicht matcht, Fehlermeldung
+            loggedInHandler(false);
+            setError('Benutzername oder Passwort ungültig ');
+        }
     };
 
     const handleForgotPassword = () => {
         // Placeholder
-        alert('Wir haben Ihnen eine E-Mail geschickt, um Ihr Passwort zu erneuen (placeholder)');
+        alert('Wir haben Ihnen eine E-Mail geschickt, um Ihr Passwort zu erneuern (placeholder)');
     };
 
     return (
@@ -111,7 +141,8 @@ const Login = () => {
                         required
                     />
                 </InputDiv>
-
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                
                 <LoginButton type="submit">
                     Login
                 </LoginButton>
@@ -124,6 +155,10 @@ const Login = () => {
             </form>
         </ContainerDiv>
     );
+}
+
+UsersTable.propTypes = {
+    loggedInHandler: PropTypes.func,
 }
 
 export default Login;
