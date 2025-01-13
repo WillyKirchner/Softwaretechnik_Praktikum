@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.software_praktikum.model.Order;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-    public Order findByPerson(Person person);
+    public List<Order> findByPerson(Person person);
 }

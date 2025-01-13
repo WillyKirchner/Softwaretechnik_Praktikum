@@ -50,6 +50,13 @@ public class Order {
         this.lastEdited = lastEdited;
     }
 
+    public Order(Person person, LocalDate date, String meal, String salad) {
+        this.person = person;
+        this.date = date;
+        this.meal = meal;
+        this.salad = salad;
+    }
+
     public Order() {}
 
     public Integer getId() {
