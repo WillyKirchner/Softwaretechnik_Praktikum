@@ -16,6 +16,8 @@
 
 ## User Client
 
+- is implemented with python
+
 ## Database
 
 - go to backend/database
