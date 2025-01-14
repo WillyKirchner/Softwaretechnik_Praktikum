@@ -17,6 +17,8 @@
 ## User Client
 
 - is implemented with python
+- you need to install the libraries "kivy" "opencv-python" "pillow" "pyzbar"
+- then start the application main.py in /userClient
 
 ## Database
 
