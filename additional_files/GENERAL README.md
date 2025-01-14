@@ -15,3 +15,6 @@
 - a class 'SoftwarePraktikumApplication' should be startable
 
 ## User Client
+
+## Database
+
