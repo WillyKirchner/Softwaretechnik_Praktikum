@@ -18,3 +18,6 @@
 
 ## Database
 
+- go to backend/database
+- either use sql file to configure (we used xampp)
+- or use dockerimage linked in README.md
