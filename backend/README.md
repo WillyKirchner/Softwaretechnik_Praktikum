@@ -23,4 +23,8 @@ In case you are running another application that is already using port 8080:
 - Open a shell and run ``.\mvnw clean package``
 - after that go to /target and now there should be a jar file
 
+Running the jar:
+- ``cd target``
+- ``java -jar {Name of the jar file}``
+
 
