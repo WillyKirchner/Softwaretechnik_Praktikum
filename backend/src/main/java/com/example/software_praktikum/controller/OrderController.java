@@ -4,6 +4,7 @@ import com.example.software_praktikum.model.Order;
 import com.example.software_praktikum.model.Person;
 import com.example.software_praktikum.repository.OrderRepository;
 import com.example.software_praktikum.repository.PersonRepository;
+import jakarta.validation.constraints.Null;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -13,6 +14,8 @@ import java.util.List;
 /*
 
 Handles all requests related to Order
+
+TODO: return JSON-formatted error messages
 
  */
 
@@ -80,7 +83,35 @@ public class OrderController {
 
     }
 
+    @PutMapping("/create/json/")
+    public Order createOrderByJson(@RequestParam Order order) {
+        return orderRepository.save(order);
+    }
 
+    @PutMapping("/update/")
+    public Order updateOrder(@RequestParam Integer personID,
+                             @RequestParam LocalDate date,
+                             @RequestParam String meal,
+                             @RequestParam String salad,
+                             @RequestParam Integer orderID) {
 
+        Person person = personRepository.findById(personID).get();
+        List<Order> orders = orderRepository.findByPerson(person);
+        Order changed_order;
+        for (Order order : orders) {
+            if (order.getId().equals(orderID)) {
+                changed_order = order;
+                if (date != null) changed_order.setDate(date);
+                if (meal != null) changed_order.setMeal(meal);
+                if (salad != null) changed_order.setSalad(salad);
+                changed_order.setLastEdited(Instant.now());
+                return orderRepository.save(changed_order);
+            }
+        }
+
+        return new Order();
+
+    }
+    
 
 }
