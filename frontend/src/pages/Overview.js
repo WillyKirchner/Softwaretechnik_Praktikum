@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom'; 
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa'; // Person icon
+import {Button} from "react-bootstrap";
+import PropTypes from "prop-types";
 
 // Dummy data for sites and orders
 const dummyData = [
@@ -70,20 +73,29 @@ const DropdownMenu = styled.div`
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 10px;
-  width: 150px;
+  width: 170px;
 `;
 
 const DropdownItem = styled.div`
   padding: 8px 12px;
   cursor: pointer;
-  border-bottom: 1px solid #ccc;
   
+
   &:hover {
     background-color: #f1f1f1;
   }
 
   &:last-child {
-    border-bottom: none;
+    border-top: 2px solid #ccc;
+  }
+`;
+
+const LogOutItem = styled(DropdownItem)`
+  color: red; /* Highlight the log out item with a different color */
+  font-weight: bold;
+
+  &:hover {
+    background-color: #f9e7e7; /* A different hover effect for Log Out */
   }
 `;
 //icon stuff ende
@@ -176,7 +188,7 @@ const TotalOrder = styled.p`
   text-align: center;
 `;
 
-const Overview = () => {
+const Overview = props => {
   // State to manage which site is expanded
   const [expandedSite, setExpandedSite] = useState(null);
 
@@ -198,12 +210,12 @@ const Overview = () => {
     setExpandedSite(expandedSite === site ? null : site);
   };
   const [dropdownOpen, setDropdownOpen] = useState(false);
-    const { loggedInHandler } = props;
-    const { users, isLoggedIn } = props;
-    const location = useLocation(); // To get state passed via React Router
-    const toggleDropdown = () => {
+  const { loggedInHandler } = props;
+  const { users, isLoggedIn } = props;
+  const location = useLocation(); // To get state passed via React Router
+  const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
-      };
+  };
     
     const username = location.state?.username || localStorage.getItem('username');
     const navigate = useNavigate();
@@ -218,9 +230,13 @@ const Overview = () => {
         navigate('/');
     };
     
-    const handleGoToOverview = () => {
-        navigate('/Overview'); // Navigate to the overview page
-    };
+    const handleGoToAdmin = () => {
+      navigate('/Admin'); // Navigate to the overview page
+  };
+  
+  const handleGoToOverview = () => {
+      navigate('/Overview'); // Navigate to the overview page
+  };
 
     if (isLoggedIn) {
         return (
@@ -235,11 +251,13 @@ const Overview = () => {
             {/* Dropdown Menu */}
             {dropdownOpen && (
               <DropdownMenu>
-                <DropdownItem onClick={handleGoToOverview}>Overview</DropdownItem>
-                <DropdownItem onClick={handleLogOut}>Ausloggen</DropdownItem>
+                <DropdownItem onClick={handleGoToAdmin}>Bestellübersicht</DropdownItem>
+                <DropdownItem onClick={handleGoToOverview}>Standortübersicht</DropdownItem>
+                <LogOutItem onClick={handleLogOut}>Ausloggen</LogOutItem>
               </DropdownMenu>
             )}
-          </AdminPageContainer><OverviewPageWrapper>
+          </AdminPageContainer>
+          <OverviewPageWrapper>
               <PageTitle>Standortübersicht</PageTitle>
               <SiteList>
                 {dummyData.map((siteData, index) => {
@@ -276,7 +294,7 @@ const Overview = () => {
               </SiteList>
             </OverviewPageWrapper></>
         );
-
+      }
     else {
         return(
             <>

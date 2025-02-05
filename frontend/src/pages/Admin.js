@@ -42,22 +42,32 @@ const DropdownMenu = styled.div`
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 10px;
-  width: 150px;
+  width: 170px;
 `;
 
 const DropdownItem = styled.div`
   padding: 8px 12px;
   cursor: pointer;
-  border-bottom: 1px solid #ccc;
   
+
   &:hover {
     background-color: #f1f1f1;
   }
 
   &:last-child {
-    border-bottom: none;
+    border-top: 2px solid #ccc;
   }
 `;
+
+const LogOutItem = styled(DropdownItem)`
+  color: red; /* Highlight the log out item with a different color */
+  font-weight: bold;
+
+  &:hover {
+    background-color: #f9e7e7; /* A different hover effect for Log Out */
+  }
+`;
+
 //icon stuff ende
 
 const testObject = [
@@ -107,6 +117,10 @@ const Admin = props => {
         
         navigate('/');
     };
+
+    const handleGoToAdmin = () => {
+        navigate('/Admin'); // Navigate to the overview page
+    };
     
     const handleGoToOverview = () => {
         navigate('/Overview'); // Navigate to the overview page
@@ -128,8 +142,9 @@ const Admin = props => {
                 {/* Dropdown Menu */}
                 {dropdownOpen && (
                     <DropdownMenu>
-                    <DropdownItem onClick={handleGoToOverview}>Overview</DropdownItem>
-                    <DropdownItem onClick={handleLogOut}>Ausloggen</DropdownItem>
+                    <DropdownItem onClick={handleGoToAdmin}>Bestellübersicht</DropdownItem>
+                    <DropdownItem onClick={handleGoToOverview}>Standortübersicht</DropdownItem>
+                    <LogOutItem onClick={handleLogOut}>Ausloggen</LogOutItem>
                     </DropdownMenu>
                 )}
                 </AdminPageContainer>
