@@ -12,6 +12,7 @@ const StyledDatePicker = styled(DatePicker)`
     border: none;
     border-radius: 5px;
     background-color: #90EE90;
+    margin-bottom: 30px;
 `
 
 const CustomDatePicker2 = props => {

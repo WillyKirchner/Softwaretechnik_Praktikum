@@ -195,15 +195,7 @@ const TotalOrder = styled.p`
   text-align: left;
 `;
 
-const StyledDatePicker = styled(DatePicker)`
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    border: none;
-    border-radius: 5px;
-    background-color:#F5FFFA;
-`
+
 
 
 
@@ -281,7 +273,7 @@ const Overview = props => {
                           
           <OverviewPageWrapper>
               <PageTitle>Standortübersicht</PageTitle>
-              <DateLabel>Datum:</DateLabel>
+              <DateLabel>Datum auswählen:</DateLabel>
               <CustomDatePicker2 date={date} setDate={setDate}/>
               <SiteList>
                 {dummyData.map((siteData, index) => {
