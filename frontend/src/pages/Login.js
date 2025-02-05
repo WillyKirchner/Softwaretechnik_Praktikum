@@ -88,6 +88,7 @@ const Login = props => {
     const navigate = useNavigate(); // Used für redirecting
 
     const handleLogin = (event) => {
+        
         event.preventDefault();
         // das muss auch noch iwie auf die tabelle zugreifen
         // TODO: RestAPI-Anfrage für Login
@@ -100,6 +101,7 @@ const Login = props => {
         if (user) {
         // redirect zur Admin page
             loggedInHandler(true);
+            localStorage.setItem('username', username);
             navigate('/Admin');
         } else {
         // wenn nicht matcht, Fehlermeldung
