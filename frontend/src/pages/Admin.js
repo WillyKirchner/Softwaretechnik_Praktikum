@@ -128,8 +128,8 @@ const Admin = props => {
                 {/* Dropdown Menu */}
                 {dropdownOpen && (
                     <DropdownMenu>
-                    <DropdownItem onClick={handleGoToOverview}>Switch to Overview</DropdownItem>
-                    <DropdownItem onClick={handleLogOut}>Log Out</DropdownItem>
+                    <DropdownItem onClick={handleGoToOverview}>Overview</DropdownItem>
+                    <DropdownItem onClick={handleLogOut}>Ausloggen</DropdownItem>
                     </DropdownMenu>
                 )}
                 </AdminPageContainer>

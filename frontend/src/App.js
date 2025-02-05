@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
+import Overview from "./pages/Overview";
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
       <Routes>
  //       <Route path="/" element={<Login loggedInHandler={setLoggedIn}/>} />
           <Route path="/Admin" element={<Admin isLoggedIn={loggedIn}/>} />
+          <Route path="/Overview" element={<Overview isLoggedIn={loggedIn}/>} />
  //   </Routes>
     </Router>
   );
