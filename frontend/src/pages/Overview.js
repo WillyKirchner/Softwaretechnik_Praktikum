@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa'; // Person icon
 import {Button} from "react-bootstrap";
 import PropTypes from "prop-types";
+import CustomDatePicker2 from "../components/helperComponents/CustomDatePicker2";
+
 
 // Dummy data for sites and orders
 const dummyData = [
@@ -58,6 +60,11 @@ const UserInfo = styled.div`
 const Username = styled.span`
   margin-left: 8px;
   font-size: 16px;
+`;
+
+const DateLabel = styled.h3`
+  font-size: 18px;
+  font-weight: bold;
 `;
 
 const DropdownArrow = styled.span`
@@ -185,12 +192,25 @@ const TotalOrder = styled.p`
   font-size: 1.2rem;
   font-weight: bold;
   color: #27ae60;  /* Completely green */
-  text-align: center;
+  text-align: left;
 `;
+
+const StyledDatePicker = styled(DatePicker)`
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color:#F5FFFA;
+`
+
+
 
 const Overview = props => {
   // State to manage which site is expanded
   const [expandedSite, setExpandedSite] = useState(null);
+  const [date, setDate] = useState(new Date());
 
   // Function to calculate the total orders (red, blue, salad) for a site
   const calculateTotalOrders = (site) => {
@@ -257,8 +277,12 @@ const Overview = props => {
               </DropdownMenu>
             )}
           </AdminPageContainer>
+          
+                          
           <OverviewPageWrapper>
               <PageTitle>Standortübersicht</PageTitle>
+              <DateLabel>Datum:</DateLabel>
+              <CustomDatePicker2 date={date} setDate={setDate}/>
               <SiteList>
                 {dummyData.map((siteData, index) => {
                   const { red, blue, salad } = calculateTotalOrders(siteData);
@@ -270,7 +294,7 @@ const Overview = props => {
 
                       {/* Immediately visible total orders for each site */}
                       <SiteSummary>
-                        Red: {red}, Blue: {blue}, Salad: {salad}
+                        Rot: {red}, Blau: {blue}, Salat: {salad}
                       </SiteSummary>
 
                       {expandedSite === siteData.site && (
@@ -278,13 +302,13 @@ const Overview = props => {
                           {siteData.groups.map((group, idx) => (
                             <Group key={idx}>
                               <GroupName>{group.groupName}</GroupName>
-                              <GroupOrder style={{ color: 'red' }}>Red: {group.orders.red}</GroupOrder>
-                              <GroupOrder style={{ color: 'blue' }}>Blue: {group.orders.blue}</GroupOrder>
-                              <GroupOrder>Salad: {group.orders.salad}</GroupOrder>
+                              <GroupOrder style={{ color: 'red' }}>Rot: {group.orders.red}</GroupOrder>
+                              <GroupOrder style={{ color: 'blue' }}>Blau: {group.orders.blue}</GroupOrder>
+                              <GroupOrder>Salat: {group.orders.salad}</GroupOrder>
                             </Group>
                           ))}
                           <TotalOrder>
-                            Total Orders - Red: {red}, Blue: {blue}, Salad: {salad}
+                            Bestellungen insgesamt - Rot: {red}, Blau: {blue}, Salat: {salad}
                           </TotalOrder>
                         </SiteDetails>
                       )}
