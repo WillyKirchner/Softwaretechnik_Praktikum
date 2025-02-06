@@ -1,4 +1,4 @@
 kivy
-opencv
+opencv-python
 pillow
 pyzbar
