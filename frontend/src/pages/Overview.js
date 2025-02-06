@@ -6,6 +6,7 @@ import { FaUserCircle } from 'react-icons/fa'; // Person icon
 import {Button} from "react-bootstrap";
 import PropTypes from "prop-types";
 import CustomDatePicker2 from "../components/helperComponents/CustomDatePicker2";
+import Header from './Header'; // Import vom logo
 
 
 // Dummy data for sites and orders
@@ -116,10 +117,12 @@ const OverviewPageWrapper = styled.div`
 `;
 
 const PageTitle = styled.h1`
-  color: #34495e;
-  font-size: 2.5rem;
+  color: #2980b9;
+  
   text-align: center;
   margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: bold;
 `;
 
 const SiteList = styled.div`
@@ -252,6 +255,11 @@ const Overview = props => {
 
     if (isLoggedIn) {
         return (
+          <>
+          <div>
+            <Header />
+                  
+          </div>
           <><AdminPageContainer>
             {/* Username and Person Icon */}
             <UserInfo onClick={toggleDropdown}>
@@ -272,9 +280,10 @@ const Overview = props => {
           
                           
           <OverviewPageWrapper>
-              <PageTitle>Standortübersicht</PageTitle>
+              
               <DateLabel>Datum auswählen:</DateLabel>
               <CustomDatePicker2 date={date} setDate={setDate}/>
+              <PageTitle>Standorte</PageTitle>
               <SiteList>
                 {dummyData.map((siteData, index) => {
                   const { red, blue, salad } = calculateTotalOrders(siteData);
@@ -309,6 +318,7 @@ const Overview = props => {
                 })}
               </SiteList>
             </OverviewPageWrapper></>
+            </>
         );
       }
     else {

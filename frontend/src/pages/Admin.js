@@ -132,7 +132,7 @@ const Admin = props => {
             <>
                <div>
                   <Header />
-                  <h1>Bestellübersicht</h1>
+                  
               </div>
                 
                 

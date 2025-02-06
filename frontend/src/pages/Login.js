@@ -117,7 +117,7 @@ const Login = props => {
 
     return (
         <ContainerDiv>
-            <StyledH3>Essensausgabe</StyledH3>
+            <StyledH3>Mittagsversorgung</StyledH3>
             <StyledH2>Login</StyledH2>
             <form onSubmit={handleLogin}>
                 <InputDiv>
