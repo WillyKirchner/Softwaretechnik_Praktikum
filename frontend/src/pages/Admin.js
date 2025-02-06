@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 import {Button} from "react-bootstrap";
 import { FaUserCircle } from 'react-icons/fa'; // Person icon
+import Header from './Header'; // Import vom logo
 
 //icon stuff
 const AdminPageContainer = styled.div`
@@ -129,7 +130,11 @@ const Admin = props => {
     if (isLoggedIn) {
         return (
             <>
-                <h1>Admin Seite - hier vllt. Header?</h1>
+               <div>
+                  <Header />
+                  <h1>Bestellübersicht</h1>
+              </div>
+                
                 
                 <AdminPageContainer>
                 {/* Username and Person Icon */}
