@@ -76,13 +76,13 @@ const UserManagement = (props) => {
             <StyledButton
                 onClick={() => setShowEditModal(true)}
             >
-                Nutzer Bearbeiten
+                Nutzer bearbeiten
             </StyledButton>
             <br/>
             <StyledButton
                 onClick={() => setShowDeleteModal(true)}
             >
-                Nutzer Löschen
+                Nutzer löschen
             </StyledButton>
 
             <AddUserModal showModal={showAddModal} setShowModalFalse={handleSetAddModalFalse} testObject={users}/>
