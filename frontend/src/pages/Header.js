@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components'; // Import styled-components
 import { FaUtensils } from 'react-icons/fa'; 
-import logo from '../components/helperComponents/logo/borna.png'; 
+import logo from '../components/helperComponents/logo/image.png'; 
 
 // Styled components
 const HeaderWrapper = styled.header`
@@ -14,14 +14,14 @@ const HeaderWrapper = styled.header`
 
 const LogoContainer = styled.div`
   position: absolute;
-  top: 20px;
+  top: 15px;
   left: 20px;
   display: flex;
   align-items: center;
 `;
 
 const Logo = styled.img`
-  height: 40px;
+  height: 60px;
   margin-right: 10px;
 `;
 
