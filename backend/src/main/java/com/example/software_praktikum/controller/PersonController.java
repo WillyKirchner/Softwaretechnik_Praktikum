@@ -15,7 +15,7 @@ import java.util.List;
 /*
 
 Handles all requests related to Person
-
+TODO: return JSON-formatted error messages
  */
 
 
@@ -56,6 +56,11 @@ public class PersonController {
 
     }
 
+    @PutMapping("/create/json")
+    public Person createPersonByJson(@RequestBody Person person) {
+        return personRepository.save(person);
+    }
+
     @PutMapping("/update/")
     public Person update(@RequestParam int personID,
                          @RequestParam(required = false) String name,
@@ -67,6 +72,11 @@ public class PersonController {
 
         return personRepository.save(person);
 
+    }
+
+    @PutMapping("/update/json")
+    public Person updatePersonByJson(@RequestBody Person person) {
+        return personRepository.save(person);
     }
 
     @DeleteMapping("/delete/{personID}")
