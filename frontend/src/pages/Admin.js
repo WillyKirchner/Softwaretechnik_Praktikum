@@ -130,9 +130,7 @@ const Admin = props => {
         navigate('/Overview'); // Navigate to the overview page
     };
 
-    //const { users } = props;
-    useEffect(() => {
-        // Daten von der API laden und in den State setzen
+    const fetchUsers = () => {
         fetch('http://localhost:5000/person/')
             .then(response => response.json())
             .then(data => {
@@ -145,6 +143,12 @@ const Admin = props => {
                 setUsers(transformedData);
             })
             .catch(error => console.error('Fehler beim Laden der Daten:', error));
+    }
+
+    //const { users } = props;
+    useEffect(() => {
+        // Daten von der API laden und in den State setzen
+        fetchUsers();
     }, []);
 
     if (isLoggedIn) {
@@ -178,10 +182,12 @@ const Admin = props => {
                     <UsersTable
                         title={'Bestellübersicht'}
                         description={'Wähle hier das Datum für welches du bestellen möchtest:'}
-                        users={testObject}
+                        users={users}
                         addOrder={true}
                         editOrder={true}
                         deleteOrder={true}
+                        reload={fetchUsers}
+                        qrCode={true}
                     />
                 </ComponentContainer>
                 <ComponentContainer>

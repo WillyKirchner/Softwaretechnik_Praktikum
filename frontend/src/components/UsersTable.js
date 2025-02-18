@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Table } from "react-bootstrap";
+import {Button, Table} from "react-bootstrap";
 import TableRow from "./helperComponents/TableRow";
 import CustomDatePicker from "./helperComponents/CustomDatePicker";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import { IoReload } from "react-icons/io5";
 
 const StyledTableBox = styled.div`
     border: none;
@@ -26,6 +27,19 @@ const StyledSearch = styled.input`
     border-radius: 5px;
 `
 
+const StyledButton = styled(Button)`
+    background: transparent;
+    border-radius: 3px;
+    border: 2px solid #7b00ff;
+    color: #7b00ff;
+    padding: 5px;
+    &:hover {
+        border: 2px solid #7b00ff;
+        color: #FFFFFF;
+        background: #7b00ff;
+    }
+`
+
 const UsersTable = props => {
     const {
         title,
@@ -36,6 +50,8 @@ const UsersTable = props => {
         deleteOrder,
         interactButton,
         interactButtonHandler,
+        reload,
+        qrCode,
     } = props;
 
     const [search, setSearch] = useState('')
@@ -56,7 +72,8 @@ const UsersTable = props => {
 
     return (
         <>
-            <h2>{title}</h2>
+            <h2>{title} {' '}{reload && <StyledButton onClick={reload}><IoReload/></StyledButton>}</h2>
+
             <div>{description}<br />
                 {
                     (addOrder || editOrder || deleteOrder) ?
@@ -80,6 +97,7 @@ const UsersTable = props => {
                         {editOrder && <th>Bestellung ändern</th>}
                         {deleteOrder && <th>Bestellung löschen</th>}
                         {interactButton && <th>{interactButton}</th>}
+                        {qrCode && <th>QR-Code</th>}
                     </tr>
                     </thead>
                     <tbody>
@@ -92,6 +110,7 @@ const UsersTable = props => {
                             deleteOrder={deleteOrder}
                             interact={interactButton}
                             interactHandler={interactButtonHandler}
+                            qrCode={qrCode}
                         />
                     ))}
                     {!users && <th>no data</th>}
@@ -111,6 +130,8 @@ UsersTable.propTypes = {
     deleteOrder: PropTypes.bool,
     interactButton: PropTypes.string,
     interactButtonHandler: PropTypes.func,
+    reload: PropTypes.func,
+    qrCode: PropTypes.bool,
 }
 
 export default UsersTable;

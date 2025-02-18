@@ -198,10 +198,6 @@ const TotalOrder = styled.p`
   text-align: left;
 `;
 
-
-
-
-
 const Overview = props => {
   // State to manage which site is expanded
   const [expandedSite, setExpandedSite] = useState(null);
@@ -225,8 +221,7 @@ const Overview = props => {
     setExpandedSite(expandedSite === site ? null : site);
   };
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { loggedInHandler } = props;
-  const { users, isLoggedIn } = props;
+  const { isLoggedIn } = props;
   const location = useLocation(); // To get state passed via React Router
   const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);

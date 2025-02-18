@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import OrderFoodButton from "./Buttons/OrderFoodButton";
 import EditOrderButton from "./Buttons/EditOrderButton";
 import DeleteOrderButton from "./Buttons/DeleteOrderButton";
+import GetQRCodeButton from "./Buttons/GetQRCodeButton";
 import {Button} from "react-bootstrap";
 import styled from "styled-components";
 
@@ -24,7 +25,16 @@ const StyledInteractButton = styled(Button)`
 `
 
 const UsersTable = props => {
-    const { user, day, addOrder, editOrder, deleteOrder, interact, interactHandler } = props;
+    const {
+        user,
+        day,
+        addOrder,
+        editOrder,
+        deleteOrder,
+        interact,
+        interactHandler,
+        qrCode,
+    } = props;
 
     return (
         <tr>
@@ -34,6 +44,7 @@ const UsersTable = props => {
             {editOrder && <th><EditOrderButton id={user.id} day={day}/></th>}
             {deleteOrder && <th><DeleteOrderButton id={user.id} day={day}/></th>}
             {interact && <th><StyledInteractButton onClick={interactHandler}>{interact}</StyledInteractButton> </th>}
+            {qrCode && <th><GetQRCodeButton name={user.name} id={user.id} /></th>}
         </tr>
     )
 }
@@ -46,6 +57,7 @@ UsersTable.propTypes = {
     deleteOrder: PropTypes.bool,
     interact: PropTypes.string,
     interactHandler: PropTypes.func,
+    qrCode: PropTypes.bool,
 }
 
 export default UsersTable;

@@ -57,15 +57,26 @@ const AddUserModal = props => {
     const {
         showModal,
         setShowModalFalse,
-        testObject,
     } = props;
 
     const [privilegeOn, setPrivilegeOn] = useState(true)
     // const [userList, setUserList] = useState(testobject)
     const [newUser, setNewUser] = useState({name: '', password: '', privilegeLevel: 0 });
+    const [users, setUsers] = useState([])
 
     useEffect(() => {
-        // TODO: RestAPI Get Userlist
+        fetch('http://localhost:5000/person/')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Gefetchte Daten:', data);
+                // Daten transformieren, um sie mit deinem bestehenden testObject-Format abzugleichen
+                const transformedData = data.map(user => ({
+                    name: user.name,
+                    id: user.id.toString().padStart(4, '0') // ID vierstellig formatieren
+                }));
+                setUsers(transformedData);
+            })
+            .catch(error => console.error('Fehler beim Laden der Daten:', error));
     }, []);
 
     const handleInputChange = (e) => {
@@ -78,6 +89,7 @@ const AddUserModal = props => {
             alert('Bitte alle Felder ausfüllen.');
             return;
         }
+        console.log('admin')
 
         try {
             console.log('Daten, die gesendet werden:', {
@@ -119,18 +131,32 @@ const AddUserModal = props => {
             alert('Bitte fülle das Feld für den Namen aus.');
             return;
         }
+        console.log(encodeURIComponent(newUser.name))
 
         try {
             console.log('Daten, die gesendet werden:', { username: newUser.name });
 
             // Erstelle die URL mit dem Query-Parameter für den Namen
-            const url = `http://localhost:5000/user/create/?username=${encodeURIComponent(newUser.name)}&password=default&privilegeLevel=0`;
+            // const url = `http://localhost:5000/person/create/?username=${encodeURIComponent(newUser.name)}&groupId='1'`;
+            //
+            // const response = await fetch(url, {
+            //     method: 'PUT',
+            //     headers: {
+            //         'Content-Type': 'application/json', // Optional, aber schadet nicht
+            //     },
+            // });
 
-            const response = await fetch(url, {
+            const response = await fetch('http://localhost:5000/person/create/json', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json', // Optional, aber schadet nicht
                 },
+                body: JSON.stringify({
+                    name: newUser.name,
+                    group: {
+                        id: 1,
+                    }
+                })
             });
 
             if (response.ok) {
@@ -255,7 +281,7 @@ const AddUserModal = props => {
                             </Form>
                             Wähle die Nutzer aus die von diesem Nutzer verwaltet werden:
                             <StyledUserTable
-                                users={testObject}
+                                users={users}
                                 interactButton={'Auswählen'}
                                 interactButtonHandler={handleAddManagedUser}
                             />
