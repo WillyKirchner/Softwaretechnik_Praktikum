@@ -12,6 +12,7 @@
 
 - Mapping for Swagger-UI and phpmyadmin could be removed for deployment
 - username & password for phpmyadmin: root
+- to inspect the Backend, use Swagger
 
 ## User Client
 
