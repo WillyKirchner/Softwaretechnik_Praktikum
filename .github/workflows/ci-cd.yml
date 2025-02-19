@@ -1,0 +1,102 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v3
+
+      - name: Installiere Docker und Docker Compose (falls nicht vorhanden)
+        run: |
+          if ! command -v docker &> /dev/null; then
+            echo "Docker nicht gefunden, wird installiert..."
+            sudo apt update
+            sudo apt install -y docker.io
+            sudo systemctl start docker
+            sudo systemctl enable docker
+          fi
+
+          if ! docker compose version &> /dev/null; then
+            echo "Docker Compose (Plugin) wird installiert..."
+            sudo apt-get update
+            sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+          fi
+
+      - name: Setze Docker BuildKit ein
+        run: export DOCKER_BUILDKIT=1
+
+      - name: Baue und starte Container mit docker compose
+        run: docker compose up --build -d
+
+      # auskommentiert, da keine Tests vorhanden
+      #- name: Warten, bis Backend verfügbar ist
+      #  run: sleep 15  # Alternativ: Healthcheck implementieren
+
+      # auskommentiert, da keine Tests vorhanden
+      #- name: Führe Tests für Backend aus
+      #  run: docker exec my_java_app mvn test || docker exec my_java_app ./mvnw test
+
+      # auskommentiert, da keine Tests vorhanden
+      #- name: Führe Tests für Frontend aus
+      #  run: docker exec my_react_app npm test -- --watchAll=false
+
+      - name: Stoppe Container
+        run: docker compose down
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v3
+
+      - name: Installiere Docker und Docker Compose (falls nicht vorhanden)
+        run: |
+          if ! command -v docker &> /dev/null; then
+            echo "Docker nicht gefunden, wird installiert..."
+            sudo apt update
+            sudo apt install -y docker.io
+            sudo systemctl start docker
+            sudo systemctl enable docker
+          fi
+
+          if ! docker compose version &> /dev/null; then
+            echo "Docker Compose (Plugin) wird installiert..."
+            sudo apt-get update
+            sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+          fi
+
+      - name: Login bei DockerHub
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Baue & pushe Backend-Image
+        run: |
+          docker build -t myusername/myapp-backend:latest ./backend
+          docker tag myusername/myapp-backend:latest myusername/myapp-backend:${{ github.sha }}
+          docker push myusername/myapp-backend:latest
+          docker push myusername/myapp-backend:${{ github.sha }}
+
+      - name: Baue & pushe Frontend-Image
+        run: |
+          docker build -t myusername/myapp-frontend:latest ./frontend
+          docker tag myusername/myapp-frontend:latest myusername/myapp-frontend:${{ github.sha }}
+          docker push myusername/myapp-frontend:latest
+          docker push myusername/myapp-frontend:${{ github.sha }}
+
+      - name: Deploy auf Server via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no user@server << 'EOF'
+            docker pull myusername/myapp-backend:latest
+            docker pull myusername/myapp-frontend:latest
+            cd /path/to/project
+            docker compose down
+            docker compose up -d
+          EOF
