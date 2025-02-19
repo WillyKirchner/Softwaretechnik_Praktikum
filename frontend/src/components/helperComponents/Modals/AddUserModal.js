@@ -135,7 +135,7 @@ const AddUserModal = props => {
         try {
             console.log('Daten, die gesendet werden:', { username: newUser.name });
 
-            const response = await fetch('http://localhost:5000/person/create/json', {
+            const response = await fetch('http://localhost:5000/person/create/json/', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json', // Optional, aber schadet nicht
