@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Erstellungszeit: 17. Feb 2025 um 20:03
--- Server-Version: 10.4.32-MariaDB
--- PHP-Version: 8.2.12
+-- Host: db
+-- Erstellungszeit: 19. Feb 2025 um 10:31
+-- Server-Version: 11.7.2-MariaDB-ubu2404
+-- PHP-Version: 8.2.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,13 +31,6 @@ CREATE TABLE `groups` (
   `group_id` int(11) NOT NULL,
   `group_alias` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Daten für Tabelle `groups`
---
-
-INSERT INTO `groups` (`group_id`, `group_alias`) VALUES
-(1, 'Bubatz');
 
 -- --------------------------------------------------------
 
@@ -78,15 +71,6 @@ CREATE TABLE `user` (
   `privilege_level` int(11) DEFAULT NULL,
   `username` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Daten für Tabelle `user`
---
-
-INSERT INTO `user` (`user_id`, `password`, `privilege_level`, `username`) VALUES
-(2, '$2a$10$Aq0w8l9l6SY7tHz4A/Poi.qYSX1U5l1Byv0vAkmuilB.Mkg7.lcCm', 1, 'Peter Griffin'),
-(3, '$2a$10$EeqZk2D7CAvMiBo87cqb6eEfq8Q5J3O2q9ln0cd1ZsyUW2anOTHTq', 1, 'Meg Griffin'),
-(4, '$2a$10$FW9LYUefxVC2qAGngqmMtOo/qvztCrbORb6D9tjGf1zCwhaNRfyH.', 4, 'Discord-Mod');
 
 -- --------------------------------------------------------
 
@@ -164,7 +148,7 @@ ALTER TABLE `persons`
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT für Tabelle `user_groups`
