@@ -1,14 +1,14 @@
-package com.example.software_praktikum.controller;
+package com.software_praktikum.controller;
 
-import com.example.software_praktikum.model.Group;
-import com.example.software_praktikum.model.Order;
-import com.example.software_praktikum.model.Person;
-import com.example.software_praktikum.model.User;
-import com.example.software_praktikum.repository.GroupRepository;
-import com.example.software_praktikum.repository.OrderRepository;
-import com.example.software_praktikum.repository.PersonRepository;
-import com.example.software_praktikum.repository.UserRepository;
+import com.software_praktikum.model.Group;
+import com.software_praktikum.model.Person;
+import com.software_praktikum.repository.GroupRepository;
+import com.software_praktikum.repository.OrderRepository;
+import com.software_praktikum.repository.PersonRepository;
+import com.software_praktikum.repository.UserRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class PersonController {
 
     @GetMapping("/{personID}")
     public Person getPerson(@PathVariable("personID") Integer personID) {
-        return personRepository.findById(personID).orElse(null);
+        return personRepository.findById(personID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Person nicht gefunden"));
     }
 
 
@@ -50,7 +50,7 @@ public class PersonController {
     public Person create(@RequestParam String name,
                          @RequestParam int groupID) {
 
-        Group group = groupRepository.findById(groupID).get();
+        Group group = groupRepository.findById(groupID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gruppe nicht gefunden"));
         Person person = new Person(name, group);
         return personRepository.save(person);
 
@@ -66,9 +66,9 @@ public class PersonController {
                          @RequestParam(required = false) String name,
                          @RequestParam(required = false) Integer groupID) {
 
-        Person person = personRepository.findById(personID).get();
+        Person person = personRepository.findById(personID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Person nicht gefunden"));
         if (name != null) person.setName(name);
-        if (groupID != null) person.setGroup(groupRepository.findById(groupID).get());
+        if (groupID != null) person.setGroup(groupRepository.findById(groupID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Gruppe nicht gefunden")));
 
         return personRepository.save(person);
 
@@ -76,12 +76,15 @@ public class PersonController {
 
     @PutMapping("/update/json")
     public Person updatePersonByJson(@RequestBody Person person) {
+
+        personRepository.findById(person.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Person nicht gefunden"));
+
         return personRepository.save(person);
     }
 
     @DeleteMapping("/delete/{personID}")
     public void delete(@PathVariable("personID") Integer personID) {
-        Person person = personRepository.findById(personID).get();
+        Person person = personRepository.findById(personID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Person nicht gefunden"));
         personRepository.delete(person);
     }
 

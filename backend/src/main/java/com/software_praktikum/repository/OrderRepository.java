@@ -1,8 +1,8 @@
-package com.example.software_praktikum.repository;
+package com.software_praktikum.repository;
 
-import com.example.software_praktikum.model.Person;
+import com.software_praktikum.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.example.software_praktikum.model.Order;
+import com.software_praktikum.model.Order;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

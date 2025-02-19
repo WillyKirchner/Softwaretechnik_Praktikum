@@ -1,9 +1,7 @@
-package com.example.software_praktikum.model;
+package com.software_praktikum.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
@@ -20,7 +18,7 @@ public class Order {
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "person_id", nullable = false)
-    private com.example.software_praktikum.model.Person person;
+    private Person person;
 
     @NotNull
     @Column(name = "date", nullable = false)
@@ -31,17 +29,16 @@ public class Order {
     private String meal;
 
     @NotNull
-    @ColumnDefault("'nein'")
     @Lob
     @Column(name = "salad", nullable = false)
-    private String salad;
+    private Boolean salad;
 
     @NotNull
     @ColumnDefault("current_timestamp()")
     @Column(name = "last_edited", nullable = false)
     private Instant lastEdited;
 
-    public Order(Integer id, Person person, LocalDate date, String meal, String salad, Instant lastEdited) {
+    public Order(Integer id, Person person, LocalDate date, String meal, Boolean salad, Instant lastEdited) {
         this.id = id;
         this.person = person;
         this.date = date;
@@ -50,7 +47,7 @@ public class Order {
         this.lastEdited = lastEdited;
     }
 
-    public Order(Person person, LocalDate date, String meal, String salad) {
+    public Order(Person person, LocalDate date, String meal, Boolean salad) {
         this.person = person;
         this.date = date;
         this.meal = meal;
@@ -91,11 +88,11 @@ public class Order {
         this.meal = meal;
     }
 
-    public String getSalad() {
+    public Boolean getSalad() {
         return salad;
     }
 
-    public void setSalad(String salad) {
+    public void setSalad(Boolean salad) {
         this.salad = salad;
     }
 
