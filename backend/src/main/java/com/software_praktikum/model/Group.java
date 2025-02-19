@@ -1,4 +1,4 @@
-package com.example.software_praktikum.model;
+package com.software_praktikum.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

@@ -1,9 +1,9 @@
-package com.example.software_praktikum.controller;
+package com.software_praktikum.controller;
 
-import com.example.software_praktikum.model.Group;
-import com.example.software_praktikum.model.Person;
-import com.example.software_praktikum.repository.GroupRepository;
-import com.example.software_praktikum.repository.PersonRepository;
+import com.software_praktikum.model.Group;
+import com.software_praktikum.model.Person;
+import com.software_praktikum.repository.GroupRepository;
+import com.software_praktikum.repository.PersonRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 /*
 
 Handles all requests related to Group<->Person relationship
-
+TODO: return JSON-formatted error messages
  */
 
 

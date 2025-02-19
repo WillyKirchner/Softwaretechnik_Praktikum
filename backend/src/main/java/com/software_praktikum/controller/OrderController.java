@@ -1,14 +1,16 @@
-package com.example.software_praktikum.controller;
+package com.software_praktikum.controller;
 
-import com.example.software_praktikum.model.Order;
-import com.example.software_praktikum.model.Person;
-import com.example.software_praktikum.repository.OrderRepository;
-import com.example.software_praktikum.repository.PersonRepository;
-import jakarta.validation.constraints.Null;
+import com.software_praktikum.model.Order;
+import com.software_praktikum.model.Person;
+import com.software_praktikum.repository.OrderRepository;
+import com.software_praktikum.repository.PersonRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -38,14 +40,21 @@ public class OrderController {
 
     @GetMapping("/{OrderID}")
     public Order getOrder(@PathVariable Integer OrderID) {
-        return orderRepository.findById(OrderID).orElse(null);
+
+        return orderRepository.findById(OrderID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bestellung nicht gefunden"));
     }
+
+    @GetMapping("/date")
+    public List<Order> getOrdersByDate(@RequestParam LocalDate date) {
+        return orderRepository.getOrdersByDate(date);
+    }
+
 
     @GetMapping("/today/{personID}")
     public Order getTodaysOrder(@PathVariable("personID") Integer personID) {
 
         LocalDate currentDate = LocalDate.now();
-        Person person = personRepository.findById(personID).orElse(null);
+        Person person = personRepository.findById(personID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Person nicht gefunden"));
         List<Order> orders = orderRepository.findByPerson(person);
 
         for (Order order : orders) {
@@ -53,14 +62,14 @@ public class OrderController {
                 return order;
             }
         }
-        //return empty order if no order with current date is found
-        return new Order();
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bestellung nicht gefunden");
     }
 
 
     @DeleteMapping("/delete/{personID}")
     public void deleteOrder(@PathVariable Integer personID) {
-        Order order = orderRepository.findById(personID).get();
+        Order order = orderRepository.findById(personID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Person nicht gefunden"));
         orderRepository.delete(order);
     }
 
@@ -69,9 +78,9 @@ public class OrderController {
     public Order createOrder(@RequestParam Integer personID,
                              @RequestParam LocalDate date,
                              @RequestParam String meal,
-                             @RequestParam String salad) {
+                             @RequestParam Boolean salad) {
 
-        Person person = personRepository.findById(personID).get();
+        Person person = personRepository.findById(personID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Person nicht gefunden"));
         Order order = new Order();
         order.setPerson(person);
         order.setDate(date);
@@ -92,10 +101,10 @@ public class OrderController {
     public Order updateOrder(@RequestParam Integer personID,
                              @RequestParam LocalDate date,
                              @RequestParam String meal,
-                             @RequestParam String salad,
+                             @RequestParam Boolean salad,
                              @RequestParam Integer orderID) {
 
-        Person person = personRepository.findById(personID).get();
+        Person person = personRepository.findById(personID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Person nicht gefunden"));
         List<Order> orders = orderRepository.findByPerson(person);
         Order changed_order;
         for (Order order : orders) {

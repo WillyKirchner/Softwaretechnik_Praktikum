@@ -1,10 +1,8 @@
-package com.example.software_praktikum.model;
+package com.software_praktikum.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
 
 
 @Entity

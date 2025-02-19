@@ -1,9 +1,7 @@
-package com.example.software_praktikum.model;
+package com.software_praktikum.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
 
 
 @Entity
@@ -31,6 +29,13 @@ public class UserGroup {
     }
 
     public UserGroup() {}
+
+    public UserGroup(Group group, User user) {
+
+    this.group = group;
+    this.user = user;
+
+    }
 
     public Integer getId() {
         return id;

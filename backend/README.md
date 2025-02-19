@@ -1,5 +1,10 @@
 # Readme
 
+### Prerequisites
+Database:
+- best practice: use Docker Image (see Docker-Image-branch)
+- XAMPP: load dump.sql from Docker-Image-branch (Database-Branch won't work anymore with this backend-version)
+
 ### Running the project in IntelliJ
 
 - Clone the project from GitHub

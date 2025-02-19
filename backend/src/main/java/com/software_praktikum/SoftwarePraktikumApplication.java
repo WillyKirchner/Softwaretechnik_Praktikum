@@ -1,9 +1,10 @@
-package com.example.software_praktikum;
+package com.software_praktikum;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class SoftwarePraktikumApplication {
 
     public static void main(String[] args) {

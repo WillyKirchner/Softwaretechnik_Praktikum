@@ -1,4 +1,4 @@
-package com.example.software_praktikum.config;
+package com.software_praktikum.config;
 
 import io.micrometer.common.lang.NonNull;
 import org.springframework.context.annotation.Bean;

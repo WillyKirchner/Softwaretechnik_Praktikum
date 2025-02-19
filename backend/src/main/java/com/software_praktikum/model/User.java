@@ -1,4 +1,4 @@
-package com.example.software_praktikum.model;
+package com.software_praktikum.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -15,14 +15,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Size(max = 50)
+    @Size(max = 150)
     @NotNull
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "username", nullable = false, length = 150)
     private String username;
 
-    @Size(max = 50)
+    @Size(max = 150)
     @NotNull
-    @Column(name = "password", nullable = false, length = 50)
+    @Column(name = "password", nullable = false, length = 150)
     private String password;
 
 
