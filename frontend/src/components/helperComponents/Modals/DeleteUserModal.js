@@ -31,17 +31,53 @@ const DeleteUserModal = props => {
     const {
         showModal,
         setShowModalFalse,
-        testObject,
     } = props;
 
-    const [userList, setUserList] = useState(testObject)
+    const [userList, setUserList] = useState([])
+
+    const fetchUsers = () => {
+        fetch('http://localhost:5000/person/')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Gefetchte Daten:', data);
+                // Daten transformieren, um sie mit deinem bestehenden testObject-Format abzugleichen
+                const transformedData = data.map(user => ({
+                    name: user.name,
+                    id: user.id.toString().padStart(4, '0') // ID vierstellig formatieren
+                }));
+                setUserList(transformedData);
+            })
+            .catch(error => console.error('Fehler beim Laden der Daten:', error));
+    }
 
     useEffect(() => {
-        // TODO: RestAPI Get Userlist
+        fetchUsers();
     }, []);
 
-    const handleDeleteUser = () => {
-        // TODO: delete User via ID
+    const handleDeleteUser = (userId) => {
+        console.log(userId);
+        fetch(`http://localhost:5000/person/delete/?personID=${encodeURIComponent(userId)}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+                // Falls du einen Auth-Header oder Ähnliches brauchst, kannst du das hier ergänzen
+                // 'Authorization': 'Bearer deinToken'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Fehler: ${response.status}`);
+                }
+                return response.json(); // Je nachdem, was deine API zurückgibt
+            })
+            .then(data => {
+                // Erfolgreiche Antwort
+                console.log('Delete erfolgreich:', data);
+            })
+            .catch(error => {
+                console.error('Fehler bei der Delete-Anfrage:', error);
+            });
+        fetchUsers();
     }
 
     return(

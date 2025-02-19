@@ -125,7 +125,6 @@ const AddUserModal = props => {
     };
 
 
-
     const handleAddNormalUser = async () => {
         if (!newUser.name) {
             alert('Bitte fülle das Feld für den Namen aus.');
@@ -135,16 +134,6 @@ const AddUserModal = props => {
 
         try {
             console.log('Daten, die gesendet werden:', { username: newUser.name });
-
-            // Erstelle die URL mit dem Query-Parameter für den Namen
-            // const url = `http://localhost:5000/person/create/?username=${encodeURIComponent(newUser.name)}&groupId='1'`;
-            //
-            // const response = await fetch(url, {
-            //     method: 'PUT',
-            //     headers: {
-            //         'Content-Type': 'application/json', // Optional, aber schadet nicht
-            //     },
-            // });
 
             const response = await fetch('http://localhost:5000/person/create/json', {
                 method: 'PUT',

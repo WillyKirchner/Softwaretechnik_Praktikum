@@ -59,16 +59,66 @@ const OrderFoodButton = props => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const formatDateToYYYYMMDD = (date) => {
+        return date.toISOString().split('T')[0];
+    }
+
     const isButtonActive = () => {
         let isActive = true;
         // TODO: change status based on request, which checks if there already is an order
         return isActive;
     }
 
-    const handleSendOrder = () => {
-        const order = { id: id, day: day, food: mainDish, salad: salad}
+    const handleSendOrder = async () => {
         // TODO: Rest anfrage mit order um essen zu bestellen
-        setShow(false);
+        if (mainDish === '') {
+            alert('Bitte alle Felder ausfüllen.');
+            return;
+        }
+
+        const saladString = salad ? 'ja' : 'nein';
+
+        try {
+            // const url =
+            //     `http://localhost:5000/order/create/?personID=${encodeURIComponent(id)}
+            //     &date=${encodeURIComponent(formatDateToYYYYMMDD(day))}
+            //     &meal=${encodeURIComponent(mainDish)}
+            //     &salad=${encodeURIComponent(saladString)}`;
+            //
+            // const response = await fetch(url, {
+            //     method: 'PUT',
+            //     headers: {
+            //         'Content-Type': 'application/json', // Kann bleiben, wird aber nicht verwendet
+            //     }
+            // });
+
+            const response = await fetch('http://localhost:5000/order/create/json/', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json', // Kann bleiben, wird aber nicht verwendet
+                },
+                body: JSON.stringify({
+                    person: {
+                        id: id,
+                    },
+                    date: formatDateToYYYYMMDD(day),
+                    meal: mainDish,
+                    salad: salad ? 'ja' : 'nein',
+                })
+            });
+
+            if (response.ok) {
+                alert(`Essen erfolgreich angelegt`);
+                setShow(false);
+            } else {
+                const errorData = await response.json();
+                console.error('Fehlerdetails:', errorData);
+                alert(`Fehler beim Hinzufügen/Aktualisieren: ${errorData.message || 'Unbekannter Fehler'}`);
+            }
+        } catch (error) {
+            console.error("Error adding/updating user:", error);
+            alert("Fehler beim Hinzufügen/Aktualisieren. Bitte erneut versuchen.");
+        }
     }
 
     return (

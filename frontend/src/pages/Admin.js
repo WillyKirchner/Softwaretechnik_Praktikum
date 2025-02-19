@@ -69,23 +69,6 @@ const LogOutItem = styled(DropdownItem)`
   }
 `;
 
-//icon stuff ende
-
-const testObject = [
-    { name: 'Willy Fritz', id: '0001' },
-    { name: 'Max Moloch', id: '0002' },
-    { name: 'Michelangelo', id: '0003' },
-    { name: 'Caravaggio', id: '0004' },
-    { name: 'Marx', id: '0005' },
-    { name: 'Nietzsche', id: '0006' },
-    { name: 'Dostojevsky', id: '0007' },
-    { name: 'Beauvoir', id: '0008' },
-    { name: 'Tolstoi', id: '0009' },
-    { name: 'Homer', id: '0010' },
-    { name: 'Adorno', id: '0011' },
-    { name: 'Fromm', id: '0012' },
-]
-
 const ComponentContainer = styled.div`
     background-color: #c0cafa;
     border-radius: 5px;
@@ -191,7 +174,7 @@ const Admin = props => {
                     />
                 </ComponentContainer>
                 <ComponentContainer>
-                    <UserManagement users={testObject}/>
+                    <UserManagement users={users}/>
                 </ComponentContainer>
             </>
         );

@@ -36,6 +36,10 @@ const UsersTable = props => {
         qrCode,
     } = props;
 
+    const interaction = () => {
+        interactHandler(user.id);
+    }
+
     return (
         <tr>
             <th>{user.name}</th>
@@ -43,7 +47,7 @@ const UsersTable = props => {
             {addOrder && <th><OrderFoodButton name={user.name} id={user.id} day={day}/></th>}
             {editOrder && <th><EditOrderButton id={user.id} day={day}/></th>}
             {deleteOrder && <th><DeleteOrderButton id={user.id} day={day}/></th>}
-            {interact && <th><StyledInteractButton onClick={interactHandler}>{interact}</StyledInteractButton> </th>}
+            {interact && <th><StyledInteractButton onClick={interaction}>{interact}</StyledInteractButton> </th>}
             {qrCode && <th><GetQRCodeButton name={user.name} id={user.id} /></th>}
         </tr>
     )
