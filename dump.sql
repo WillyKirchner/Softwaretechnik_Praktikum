@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Erstellungszeit: 19. Feb 2025 um 10:31
+-- Erstellungszeit: 19. Feb 2025 um 19:34
 -- Server-Version: 11.7.2-MariaDB-ubu2404
 -- PHP-Version: 8.2.27
 
@@ -31,6 +31,13 @@ CREATE TABLE `groups` (
   `group_id` int(11) NOT NULL,
   `group_alias` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Daten für Tabelle `groups`
+--
+
+INSERT INTO `groups` (`group_id`, `group_alias`) VALUES
+(1, 'keine Gruppe');
 
 -- --------------------------------------------------------
 
@@ -130,7 +137,7 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT für Tabelle `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT für Tabelle `orders`
