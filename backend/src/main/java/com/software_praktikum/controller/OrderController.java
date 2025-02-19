@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -42,6 +43,12 @@ public class OrderController {
 
         return orderRepository.findById(OrderID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Bestellung nicht gefunden"));
     }
+
+    @GetMapping("/date")
+    public List<Order> getOrdersByDate(@RequestParam LocalDate date) {
+        return orderRepository.getOrdersByDate(date);
+    }
+
 
     @GetMapping("/today/{personID}")
     public Order getTodaysOrder(@PathVariable("personID") Integer personID) {
